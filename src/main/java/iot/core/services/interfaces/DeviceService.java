@@ -12,11 +12,11 @@ public interface DeviceService {
 	
 	public boolean editDevice(DeviceDTO device);
 	
-	public List<?> searchResults(String searchData);
+	public List<DeviceDTO> searchResults(String searchData);
 	
-	public List<?> getUserDevices(long userId);
+	public List<DeviceDTO> getUserDevices(long userId);
 	
-	public List<?> getGroupDevices(long groupId);
+	public List<DeviceDTO> getGroupDevices(long groupId);
 
 	public DeviceDTO getDeviceById(long deviceId);
 

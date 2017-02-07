@@ -1,5 +1,9 @@
 package iot.core.repository.impl;
 
+
+
+
+
 import iot.core.entities.user.User;
 import iot.core.repository.UserRepo;
 
@@ -7,8 +11,14 @@ import iot.core.repository.UserRepo;
  * Created by Usera on 04/02/2017.
  */
 public class UserRepositoryImpl implements UserRepo {
+	
+//	@Autowired
+//	EntityManager entityManager;
+	
     @Override
     public boolean isUsernameUnique(String username) {
+//    	Criteria criteria = entityManager.getCriteriaBuilder().
+    	
         return false;
     }
 

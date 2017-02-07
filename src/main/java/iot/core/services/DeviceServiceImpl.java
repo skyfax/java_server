@@ -30,19 +30,19 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
-	public List<?> searchResults(String searchData) {
+	public List<DeviceDTO> searchResults(String searchData) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<?> getUserDevices(long userId) {
+	public List<DeviceDTO> getUserDevices(long userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<?> getGroupDevices(long groupId) {
+	public List<DeviceDTO> getGroupDevices(long groupId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

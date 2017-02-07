@@ -15,9 +15,9 @@ public interface SensorService {
 
 	public boolean addSensorValue(SensorValueDTO sVal);
 
-	public List<?> getDeviceSensors(long deviceId);
+	public List<SensorDTO> getDeviceSensors(long deviceId);
 	
-	public List<?> getSensorValues(long sensorId);
+	public List<SensorDTO> getSensorValues(long sensorId);
 	
-	public SensorDTO getDeviceById(long deviceId);
+	public SensorDTO getSensorById(long sensorId);
 }

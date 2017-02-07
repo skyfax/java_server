@@ -37,19 +37,19 @@ public class SensorServiceImpl implements SensorService{
 	}
 
 	@Override
-	public List<?> getDeviceSensors(long deviceId) {
+	public List<SensorDTO> getDeviceSensors(long deviceId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<?> getSensorValues(long sensorId) {
+	public List<SensorDTO> getSensorValues(long sensorId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SensorDTO getDeviceById(long deviceId) {
+	public SensorDTO getSensorById(long deviceId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
