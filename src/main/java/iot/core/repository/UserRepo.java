@@ -15,5 +15,7 @@ public interface UserRepo {
     public User getUser(long userId);
 
     public boolean deleteUser(long userId);
+    
+    public User getUserByUsername(String username);
 
 }
