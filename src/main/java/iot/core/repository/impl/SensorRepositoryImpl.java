@@ -1,6 +1,8 @@
 package iot.core.repository.impl;
 
-import java.util.List;
+import iot.core.entities.sensor.Sensor;
+import iot.core.repository.SensorRepo;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,10 +10,9 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
-import iot.core.entities.sensor.Sensor;
-import iot.core.repository.SensorRepo;
-
+@Repository
 public class SensorRepositoryImpl implements SensorRepo {
 
 	@PersistenceContext
