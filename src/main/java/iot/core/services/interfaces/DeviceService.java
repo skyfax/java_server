@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DeviceService {
 	
-	public boolean addDevice(DeviceDTO device);
+	public boolean addDevice(DeviceDTO device, long userId);
 	
 	public boolean removeDevice(long deviceId);
 	

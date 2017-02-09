@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SensorService {
 
-	public SensorDTO addSensor(SensorDTO sensor);
+	public boolean addSensor(SensorDTO sensor);
 
 	public boolean removeSensor(long sensorId);
 
@@ -17,7 +17,7 @@ public interface SensorService {
 
 	public List<SensorDTO> getDeviceSensors(long deviceId);
 	
-	public List<SensorDTO> getSensorValues(long sensorId);
+	public List<SensorValueDTO> getSensorValues(long sensorId);
 	
 	public SensorDTO getSensorById(long sensorId);
 }

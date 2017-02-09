@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import iot.common.UserConverter;
 import iot.core.entities.user.User;
 import iot.core.repository.UserRepo;
 import iot.core.services.interfaces.UserService;
@@ -20,37 +21,47 @@ public class UserServiceImpl implements UserService {
 	public UserDTO addUser(UserDTO user) {
 		User userToInsert = user.toUser();
 		User result = null;
-		if (userRepository.isUsernameUnique(userToInsert.getUsername())){
+
+		if (userRepository.isUsernameUnique(userToInsert.getUsername())) {
 			userRepository.addUser(userToInsert);
-		result = userRepository.getUserByUsername(userToInsert.getUsername());
+			result = userRepository.getUserByUsername(userToInsert.getUsername());
 		}
-		
-		//TODO fix this
-		return null;
+
+		return UserConverter.toUserDTO(result);
 	}
 
 	@Override
 	public boolean removeUser(long userId) {
-		// TODO Auto-generated method stub
-		return false;
+		return userRepository.deleteUser(userId);
 	}
 
 	@Override
 	public boolean editUser(UserDTO user) {
-		// TODO Auto-generated method stub
-		return false;
+		User usr = userRepository.getUser(user.getUserId());
+
+		if (!"".equals(user.getEmail())) {
+			usr.setEmail(user.getEmail());
+		}
+
+		if (!"".equals(user.getPhone())) {
+			usr.setPhone(user.getPhone());
+		}
+		if (!"".equals(user.getPassword())) {
+			usr.setPassword(user.getPassword());
+		}
+
+		return userRepository.editUser(usr);
 	}
 
 	@Override
 	public boolean authenticateUser(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		return userRepository.authenticateUser(username, password);
 	}
 
 	@Override
 	public UserDTO getUser(long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userRepository.getUser(userId);
+		return UserConverter.toUserDTO(user);
 	}
 
 }

@@ -18,51 +18,50 @@ import net.minidev.json.JSONObject;
 @RequestMapping("/device")
 public class DeviceController {
 
-    @Autowired
-    DeviceService deviceService;
+	@Autowired
+	DeviceService deviceService;
 
-    @RequestMapping(value = "/addDevice", method = RequestMethod.POST)
-    public @ResponseBody Boolean addDevice(@RequestBody DeviceDTO device){
+	@RequestMapping(value = "/addDevice", method = RequestMethod.POST)
+	public @ResponseBody Boolean addDevice(@RequestBody DeviceDTO device) {
 
-        return Boolean.valueOf(deviceService.addDevice(device));
-    }
+		// TODO get user id from session
+		long userId = 1;
+		return Boolean.valueOf(deviceService.addDevice(device, userId));
+	}
 
-    @RequestMapping(value = "/{deviceId}", method = RequestMethod.GET)
-    public @ResponseBody
-    JSONObject getDevice(@RequestParam long deviceId){
-        JSONObject object = new JSONObject();
-       DeviceDTO dev =  deviceService.getDeviceById(deviceId);
+	@RequestMapping(value = "/{deviceId}", method = RequestMethod.GET)
+	public @ResponseBody JSONObject getDevice(@RequestParam long deviceId) {
+		JSONObject object = new JSONObject();
+		DeviceDTO dev = deviceService.getDeviceById(deviceId);
 
-       object.put("device",dev);
+		object.put("device", dev);
 
-       return object;
-    }
-    
-    @RequestMapping(value = "/removeDevice", method = RequestMethod.POST)
-    public @ResponseBody Boolean removeDevice(@RequestParam long deviceId){
+		return object;
+	}
 
-        return Boolean.valueOf(deviceService.removeDevice(deviceId));
-    }
-    
-    @RequestMapping(value = "/getDevices", method = RequestMethod.POST)
-    public @ResponseBody JSONObject getDevices(){
-    	JSONObject response = new JSONObject();
-    	
-    	///TODO add session and getUser id from there
-    	long userId = 1;
-    	List<DeviceDTO> devices =  deviceService.getUserDevices(userId);
-    	
-    	response.put("devices", devices);
-    	
-        return response;
-    }
-    
-    @RequestMapping(value = "/editDevice", method = RequestMethod.POST)
-    public @ResponseBody Boolean editDevice(@RequestBody DeviceDTO device){
+	@RequestMapping(value = "/removeDevice", method = RequestMethod.POST)
+	public @ResponseBody Boolean removeDevice(@RequestParam long deviceId) {
 
-        return Boolean.valueOf(deviceService.editDevice(device));
-    }
+		return Boolean.valueOf(deviceService.removeDevice(deviceId));
+	}
 
+	@RequestMapping(value = "/getDevices", method = RequestMethod.POST)
+	public @ResponseBody JSONObject getDevices() {
+		JSONObject response = new JSONObject();
 
+		/// TODO add session and getUser id from there
+		long userId = 1;
+		List<DeviceDTO> devices = deviceService.getUserDevices(userId);
+
+		response.put("devices", devices);
+
+		return response;
+	}
+
+	@RequestMapping(value = "/editDevice", method = RequestMethod.POST)
+	public @ResponseBody Boolean editDevice(@RequestBody DeviceDTO device) {
+
+		return Boolean.valueOf(deviceService.editDevice(device));
+	}
 
 }

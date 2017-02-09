@@ -33,13 +33,10 @@ public class SensorController {
 
 	@ResponseBody
 	@RequestMapping(value = "/addSensor", method = RequestMethod.POST)
-	public JSONObject addSensor(@RequestBody SensorDTO sensor) {
-		JSONObject object = new JSONObject();
-		SensorDTO result = sensorService.addSensor(sensor);
+	public Boolean addSensor(@RequestBody SensorDTO sensor) {
+		Boolean result = sensorService.addSensor(sensor);
 
-		object.put("sensor", result);
-
-		return object;
+		return result;
 	}
 
 	@ResponseBody

@@ -1,5 +1,6 @@
 package iot.presentation.transport;
 
+import iot.core.entities.sensor.Sensor;
 import iot.core.entities.sensor.SensorType;
 
 public class SensorDTO {
@@ -15,6 +16,8 @@ public class SensorDTO {
     private boolean isEventEnable;
 
     private SensorType sensorType;
+    
+    private Long deviceId;
 
     public long getId() {
         return id;
@@ -62,5 +65,26 @@ public class SensorDTO {
 
     public void setSensorType(SensorType sensorType) {
         this.sensorType = sensorType;
+    }
+        
+    public Long getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(Long deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public Sensor toSensor(){
+    	Sensor sensor = new Sensor();
+    	
+    	sensor.setEventEnable(isEventEnable);
+    	sensor.setId(id);
+    	sensor.setMaxValue(maxValue);
+    	sensor.setMinValue(minValue);
+    	sensor.setName(name);
+    	sensor.setSensorType(sensorType);
+
+    	return sensor;
     }
 }

@@ -6,7 +6,7 @@ public class SensorValueDTO {
 
     private double value;
 
-    private SensorDTO sensor;
+    private long sensorId;
 
     public long getId() {
         return id;
@@ -24,11 +24,12 @@ public class SensorValueDTO {
         this.value = value;
     }
 
-    public SensorDTO getSensor() {
-        return sensor;
-    }
+	public long getSensorId() {
+		return sensorId;
+	}
 
-    public void setSensor(SensorDTO sensor) {
-        this.sensor = sensor;
-    }
+	public void setSensorId(long sensorId) {
+		this.sensorId = sensorId;
+	}
+
 }

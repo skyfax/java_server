@@ -1,55 +1,84 @@
 package iot.core.services;
 
-import iot.core.services.interfaces.DeviceService;
-import iot.presentation.transport.DeviceDTO;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import iot.common.DeviceConverter;
+import iot.core.entities.device.Device;
+import iot.core.entities.user.User;
+import iot.core.repository.DeviceRepo;
+import iot.core.repository.UserRepo;
+import iot.core.services.interfaces.DeviceService;
+import iot.presentation.transport.DeviceDTO;
 
 @Service
 @Transactional
-public class DeviceServiceImpl implements DeviceService{
+public class DeviceServiceImpl implements DeviceService {
+
+	@Autowired
+	UserRepo userRepository;
+
+	@Autowired
+	DeviceRepo deviceRepository;
 
 	@Override
-	public boolean addDevice(DeviceDTO device) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addDevice(DeviceDTO device, long userId) {
+		Device dev = device.toDevice();
+		User user = userRepository.getUser(userId);
+		boolean result = false;
+
+		if (user != null) {
+			dev.setOwner(user);
+			result = deviceRepository.addDevice(dev);
+		}
+
+		return result;
 	}
 
 	@Override
 	public boolean removeDevice(long deviceId) {
-		// TODO Auto-generated method stub
-		return false;
+		return deviceRepository.removeDevice(deviceId);
 	}
 
 	@Override
 	public boolean editDevice(DeviceDTO device) {
-		// TODO Auto-generated method stub
-		return false;
+		Device dev = deviceRepository.findDeviceById(device.getId());
+
+		dev.setDataFrequency(device.getDataFrequency());
+		dev.setName(device.getName());
+		dev.setToken(device.getToken());
+
+		return deviceRepository.editDevice(dev);
 	}
 
 	@Override
 	public List<DeviceDTO> searchResults(String searchData) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Search functionality not implemented yet!");
 	}
 
 	@Override
 	public List<DeviceDTO> getUserDevices(long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Device> devs = deviceRepository.getUserDevices(userId);
+
+		return DeviceConverter.toDeviceDTOList(devs);
 	}
 
 	@Override
 	public List<DeviceDTO> getGroupDevices(long groupId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Device> devs = deviceRepository.getGroupDevices(groupId);
+
+		return DeviceConverter.toDeviceDTOList(devs);
 	}
 
 	@Override
 	public DeviceDTO getDeviceById(long deviceId) {
-		return null;
+		Device dev = deviceRepository.findDeviceById(deviceId);
+		
+		return DeviceConverter.toDeviceDTO(dev);
 	}
 
 }
