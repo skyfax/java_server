@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean authenticateUser(String username, String password) {
-		return userRepository.authenticateUser(username, password);
+	public UserDTO authenticateUser(String username, String password) {
+		return UserConverter.toUserDTO(userRepository.authenticateUser(username, password));
 	}
 
 	@Override

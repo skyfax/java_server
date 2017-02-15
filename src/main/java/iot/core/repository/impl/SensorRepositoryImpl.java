@@ -9,9 +9,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.springframework.stereotype.Repository;
+
 import iot.core.entities.sensor.Sensor;
 import iot.core.repository.SensorRepo;
 
+@Repository
 public class SensorRepositoryImpl implements SensorRepo {
 
 	@PersistenceContext

@@ -10,7 +10,7 @@ public interface UserService {
 
 	public boolean editUser(UserDTO user);
 
-	public boolean authenticateUser(String username, String password);
+	public UserDTO authenticateUser(String username, String password);
 	
 	public UserDTO getUser(long userId);
 

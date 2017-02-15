@@ -56,7 +56,7 @@ public class UserRepositoryImpl implements UserRepo {
 	}
 
 	@Override
-	public boolean authenticateUser(String username, String password) {
+	public User authenticateUser(String username, String password) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> cq = cb.createQuery(User.class);
@@ -68,7 +68,7 @@ public class UserRepositoryImpl implements UserRepo {
 
 		User result = (User) query.getSingleResult();
 
-		return result != null;
+		return result;
 	}
 
 	@Override

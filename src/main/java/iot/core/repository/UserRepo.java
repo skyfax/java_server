@@ -10,7 +10,7 @@ public interface UserRepo {
 
     public boolean editUser(User user);
 
-    public boolean authenticateUser(String username, String password);
+    public User authenticateUser(String username, String password);
 
     public User getUser(long userId);
 
