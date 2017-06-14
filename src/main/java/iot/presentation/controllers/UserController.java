@@ -22,7 +22,7 @@ public class UserController {
 
         UserDTO savedUser = userService.addUser(sentUser);
 
-        return new ResponseEntity<Boolean>(savedUser != null, HttpStatus.OK);
+        return new ResponseEntity<>(savedUser != null, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/editUser", method = RequestMethod.POST)
@@ -30,7 +30,7 @@ public class UserController {
 
         boolean wasSuccessful = userService.editUser(sentUser);
 
-        return new ResponseEntity<Boolean>(wasSuccessful, HttpStatus.OK);
+        return new ResponseEntity<>(wasSuccessful, HttpStatus.OK);
     }
 
     @ResponseBody

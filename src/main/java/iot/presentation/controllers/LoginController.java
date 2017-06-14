@@ -17,7 +17,7 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/logina", method = RequestMethod.GET)
 	public String sayHello() {
 		return "login";
 	}
