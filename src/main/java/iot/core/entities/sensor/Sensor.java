@@ -5,6 +5,7 @@ import iot.core.entities.device.Device;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="Sensor.findAll", query="SELECT s FROM Sensor s")
 public class Sensor {
 
 	@Id

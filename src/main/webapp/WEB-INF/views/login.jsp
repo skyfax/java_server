@@ -14,22 +14,30 @@
     <link href="lib/css/signin.css" rel="stylesheet">
     <script src="lib/js/iot.js"></script>
     <script src="lib/js/jquery-3.2.1.min.js"></script>
-    <!-- <script src="js/requests.js"></script> -->
+   <!--  <script src="lib/js/requests.js"></script> -->
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $("#signInButton").click(function(){
-          alert("Entered sign");
-          $.post("/token",
+        $("#signInButton").click(function(e){
+          e.preventDefault();
+        	
+          $.post("/iot/loginAction",
             {
-              username: "Donald Duck",
-              password: "Duckburg"
+              name: $("#inputUsername").val(),
+              password: $("#inputPassword").val()
             },
             function(data){
-                alert("Data: " + data + "\nStatus: ");
+				if(data.status == "ok"){
+					sessionStorage.setItem("userId",data.userId);
+					sessionStorage.setItem("username",data.username);
+					
+					window.location.href= "/iot/index";
+				}else {
+					alert("Invalid username or password.");
+				}
+	
                });
-                    alert("End sign");
-        });
+        });    
       });
     </script>
 
@@ -46,7 +54,7 @@
       <form class="form-signin">
         <h2 class="form-signin-heading">Please Sign In</h2>
         <label for="inputEmail" class="sr-only">Username</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <button id="signInButton" class="btn btn-lg btn-primary btn-block">Sign in</button>

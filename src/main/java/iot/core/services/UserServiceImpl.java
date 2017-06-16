@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import iot.common.UserConverter;
+import iot.core.entities.role.Role;
 import iot.core.entities.user.User;
+import iot.core.repository.RoleRepo;
 import iot.core.repository.UserRepo;
 import iot.core.services.interfaces.UserService;
 import iot.presentation.transport.UserDTO;
@@ -14,8 +16,13 @@ import iot.presentation.transport.UserDTO;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+	private static final long CLIENT_ROLE_ID = 1;
+	
 	@Autowired
 	UserRepo userRepository;
+	
+	@Autowired
+	RoleRepo roleRepository;
 
 	@Override
 	public UserDTO addUser(UserDTO user) {
@@ -23,6 +30,8 @@ public class UserServiceImpl implements UserService {
 		User result = null;
 
 		if (userRepository.isUsernameUnique(userToInsert.getUsername())) {
+			Role role = roleRepository.getRoleById(CLIENT_ROLE_ID);
+			userToInsert.setRole(role);
 			userRepository.addUser(userToInsert);
 			result = userRepository.getUserByUsername(userToInsert.getUsername());
 		}

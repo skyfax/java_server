@@ -9,7 +9,8 @@ function displayNavBar(page){
 	if( userId != null){
 		activeTabsLeft = '<li ' + isPageActive(page,'devices') + '><a href="devices">Devices</a></li>';
 		activeTabsRight = 	'<li ' + isPageActive(page,'account') + '><a href="account">Account</a></li>' +
-              				'<li><a href="login">Log Out</a></li>';
+              				'<li class="logOut"><a href="">Log Out</a></li>';
+		
 	}else {
 		activeTabsRight = 	'<li ' + isPageActive(page,'register') + '><a href="register">Register</a></li>' +
         					'<li ' + isPageActive(page,'signIn') + '><a href="login">Login</a></li>';
@@ -41,6 +42,19 @@ function displayNavBar(page){
 
       document.getElementById("nBar").innerHTML = html;
 }
+
+
+
+$(function() {
+    
+	$(".logOut").click(function(){
+		sessionStorage.removeItem("userId");
+		sessionStorage.removeItem("username");
+		
+		window.location.href= "/iot/index";
+	});
+});
+
 
 function isPageActive(sentPage, page){
 	if(sentPage == page){

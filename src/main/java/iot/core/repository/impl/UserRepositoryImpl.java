@@ -3,6 +3,7 @@ package iot.core.repository.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -66,7 +67,12 @@ public class UserRepositoryImpl implements UserRepo {
 		cq.where(cb.and(cb.equal(user.get("username"), username), cb.equal(user.get("password"), password)));
 		Query query = em.createQuery(cq);
 
-		User result = (User) query.getSingleResult();
+		User result = null;
+		try {
+			result = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("No result found.");
+		}
 
 		return result;
 	}

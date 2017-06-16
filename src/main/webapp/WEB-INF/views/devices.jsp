@@ -11,11 +11,11 @@
     <title>Devices</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/lib/css/navbar.css" rel="stylesheet">
-    <script src="/lib/js/iot.js"></script>
-    <script src="/lib/js/jquery-3.2.1.min.js"></script>
-    <script src="/lib/js/requests.js"></script>
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/css/navbar.css" rel="stylesheet">
+    <script src="lib/js/iot.js"></script>
+    <script src="lib/js/jquery-3.2.1.min.js"></script>
+    <script src="lib/js/requests.js"></script>
 
 </head>
 

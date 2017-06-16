@@ -75,7 +75,7 @@ public class SensorServiceImpl implements SensorService {
 
 		if (sensor != null) {
 			sValToSave.setValue(sVal.getValue());
-			sValToSave.setSensor(sensor);
+			sValToSave.setSensorId(sensor.getId());
 			result = sensorValueRepo.addSensorValue(sValToSave);
 		}
 

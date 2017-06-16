@@ -1,15 +1,39 @@
 package iot.presentation.transport;
 
-import iot.core.entities.user.User;
-import org.springframework.hateoas.ResourceSupport;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserDTO extends ResourceSupport {
+import iot.core.entities.user.User;
+
+public class UserDTO {
 
 	private long id;
 	private String username;
 	private String password;
 	private String email;
 	private long phone;
+
+//	@JsonCreator
+//	public UserDTO(@JsonProperty("username") String username, @JsonProperty("password") String password,
+//			@JsonProperty("email") String email, @JsonProperty("phone") Long phone) {
+//		this.username = username;
+//		this.password = password;
+//		this.email = email;
+//		this.phone = phone;
+//	}
+
+	@JsonCreator
+	public UserDTO(@JsonProperty("id") Long id, @JsonProperty("username") String username, @JsonProperty("password") String password,
+			@JsonProperty("email") String email, @JsonProperty("phone") Long phone) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+	}
+
+	public UserDTO() {
+	}
 
 	public long getUserId() {
 		return id;
@@ -55,7 +79,7 @@ public class UserDTO extends ResourceSupport {
 		User user = new User();
 
 		user.setEmail(email);
-		user.setId(id >= 0 ? id : null);
+		user.setId(id > 0 ? id : null);
 		user.setPhone(phone);
 		user.setUsername(username);
 		user.setPassword(password);

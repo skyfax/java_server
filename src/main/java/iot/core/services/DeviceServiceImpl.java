@@ -31,7 +31,7 @@ public class DeviceServiceImpl implements DeviceService {
 		boolean result = false;
 
 		if (user != null) {
-			dev.setOwner(user);
+			dev.setUser(user);
 			result = deviceRepository.addDevice(dev);
 		}
 

@@ -10,11 +10,11 @@
     <title>Internet of Things</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/lib/css/navbar.css" rel="stylesheet">
-    <script src="/lib/js/iot.js"></script>
+    <link href="lib/css/navbar.css" rel="stylesheet">
+    <script src="lib/js/iot.js"></script>
 
   </head>
 

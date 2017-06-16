@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import iot.core.entities.user.Role;
+import iot.core.entities.role.Role;
 import iot.core.repository.RoleRepo;
 
 @Repository

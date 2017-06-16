@@ -11,13 +11,63 @@
     <title>Account</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/lib/css/navbar.css" rel="stylesheet">
-    <script src="/lib/js/iot.js"></script>
-    <script src="/lib/js/jquery-3.2.1.min.js"></script>
-    <script src="/lib/js/requests.js"></script>
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/css/signin.css" rel="stylesheet">
+    <script src="lib/js/iot.js"></script>
+    <script src="lib/js/jquery-3.2.1.min.js"></script>
+    <script src="lib/js/requests.js"></script>
 
 </head>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#submitUpdate").click(function(e) {
+			e.preventDefault();
+			
+			var user = {
+				"id" : sessionStorage.getItem("userId"),
+				"password" : $("#inputPassword").val(),
+				"email" : $("#inputEmail").val(),
+				"phone" : $("#inputPhone").val()
+			};
+
+			$.ajax({
+				type : "POST",
+				url : "/iot/user/editUser",
+				async : false,
+				data : JSON.stringify(user),
+				contentType : "application/json",
+				complete : function(data) {
+					if (data.statusText == "success") {
+						window.location.href= "/iot/account";
+					} else {
+						alert("Could not register");
+					}
+				}
+			});
+		});
+		
+		getUser();
+	});
+	
+			function getUser(){
+		    $.get("/iot/user/getUser",
+		            {
+		    		  userId: sessionStorage.getItem("userId"),
+
+		            },
+		            function(data){
+						if(data.status == "ok"){
+							var user = data.user; 
+							$("#inputEmail").val(user.email),
+							$("#inputPhone").val(user.phone),				
+							$("#inputUsername").val(user.username);
+						}else {
+							alert("Failed to load user data.");
+						}
+		   });
+		} 
+</script>
 
 <body>
 
@@ -28,25 +78,27 @@
     <script>displayNavBar('account')</script>
 
     <!-- Main component for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work.
-            It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-            <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-        </p>
-    </div>
+
+		<form class="form-signin">
+			<h2 class="form-signin-heading">Account</h2>
+			<label for="inputUsername" class="sr-only">Username</label>
+			 <input disabled type="text" id="inputUsername" class="form-control"	placeholder="Username"> 
+			 <label	for="inputEmail" class="sr-only">Email address</label> 
+			 <input	type="email" id="inputEmail" class="form-control" placeholder="Email address"> 
+			 <label	for="inputPhone" class="sr-only">Phone</label> 
+			 <input type="text"	id="inputPhone" class="form-control" placeholder="Phone">
+			 <label for="inputPassword" class="sr-only">Password</label> 
+			 <input type="password" id="inputPassword" class="form-control"	placeholder="Password">
+
+			<button id="submitUpdate"
+				class="btn btn-lg btn-primary btn-block">Save</button>
+		</form>
+
 
 </div> <!-- /container -->
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="../../bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

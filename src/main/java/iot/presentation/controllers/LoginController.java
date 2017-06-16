@@ -17,28 +17,20 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "/logina", method = RequestMethod.GET)
-	public String sayHello() {
-		return "login";
-	}
 
-	@RequestMapping(value = "/token", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
 	public @ResponseBody JSONObject login(@RequestParam String name, @RequestParam String password) {
 		JSONObject response = new JSONObject();
 
-		String token = "asdasd.test";
-		String token_type = "jwt";
-		int expires_in = 7200;
-
-		// UserDTO user = userService.authenticateUser(name, password);
-		UserDTO user = new UserDTO();
-		user.setUserId(1);
+		 UserDTO user = userService.authenticateUser(name, password);
 
 		if (user != null) {
-			response.put("token", token);
-			response.put("token_type", token_type);
-			response.put("expires_in", expires_in);
-			response.put("user_id", user.getUserId());
+			response.put("status","ok");
+			response.put("userId", user.getUserId());
+			response.put("username", user.getUsername());
+		}else {
+			response.put("status", "invalid");
 		}
 
 		return response;

@@ -1,6 +1,6 @@
 package iot.core.repository;
 
-import iot.core.entities.user.Role;
+import iot.core.entities.role.Role;
 
 public interface RoleRepo {
 

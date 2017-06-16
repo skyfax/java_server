@@ -13,33 +13,37 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
+	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> registerAccount(@RequestBody UserDTO sentUser) {
 
-    @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> registerAccount(@RequestBody UserDTO sentUser) {
+		UserDTO savedUser = userService.addUser(sentUser);
 
-        UserDTO savedUser = userService.addUser(sentUser);
+		return new ResponseEntity<>(savedUser != null, HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(savedUser != null, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> editAccount(@RequestBody UserDTO sentUser) {
 
-    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> editAccount(@RequestBody UserDTO sentUser) {
+		boolean wasSuccessful = userService.editUser(sentUser);
 
-        boolean wasSuccessful = userService.editUser(sentUser);
+		return new ResponseEntity<>(wasSuccessful, HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(wasSuccessful, HttpStatus.OK);
-    }
+	@ResponseBody
+	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
+	public JSONObject getUser(@RequestParam long userId) {
+		JSONObject response = new JSONObject();
+		UserDTO user = userService.getUser(userId);
 
-    @ResponseBody
-    @RequestMapping(value = "/getUser", method = RequestMethod.GET)
-    public JSONObject getUser(@RequestParam long userId) {
-        JSONObject response = new JSONObject();
-        UserDTO user = userService.getUser(userId);
-        response.put("user", user);
-
-        return response;
-    }
+		if (user != null) {
+			response.put("user", user);
+			response.put("status", "ok");
+		} else {
+			response.put("status", "fail");
+		}
+		return response;
+	}
 }

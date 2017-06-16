@@ -15,17 +15,19 @@ $(document).ready(function(){
     		});
 	});
 
+   $("#signInButton").click(function(){
+	    alert("Entered sign");
+	    $.post("/token",
+	      {
+	        username: "Donald Duck",
+	        password: "Duckburg"
+	      },
+	      function(data){
+	          alert("Data: " + data + "\nStatus: ");
+	         });
+	              alert("End sign");
+	 });
 });
 
 
-$("#signInButton").click(function(){
-  	$.post(host + "/token",
-   		{
-   	 		username: "Donald Duck",
-       		password: "Duckburg",
-   		},
-   		function(data){
-   	    	alert("Data: " + data + "\nStatus: ");
-    	});
-});
 

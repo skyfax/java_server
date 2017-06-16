@@ -1,72 +1,112 @@
 package iot.core.entities.device;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
 import iot.core.entities.sensor.Sensor;
 import iot.core.entities.user.User;
 
-import javax.persistence.*;
-import java.util.List;
 
+/**
+ * The persistent class for the device database table.
+ * 
+ */
 @Entity
-public class Device {
+@NamedQuery(name="Device.findAll", query="SELECT d FROM Device d")
+public class Device implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private int dataFrequency;
-    private String name;
-    private String token;
-    @ManyToOne
-    private User owner;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @OneToMany
-    private List<Sensor> sensors;
+	private int dataFrequency;
 
-    public long getId() {
-        return id;
-    }
+	private String name;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	private String token;
 
-    public int getDataFrequency() {
-        return dataFrequency;
-    }
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="owner_id")
+	private User user;
 
-    public void setDataFrequency(int dataFrequency) {
-        this.dataFrequency = dataFrequency;
-    }
+	//bi-directional many-to-one association to DeviceSensor
+	@OneToMany(mappedBy="device")
+	private List<Sensor> deviceSensors;
 
-    public String getName() {
-        return name;
-    }
+	public Device() {
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+	public int getDataFrequency() {
+		return this.dataFrequency;
+	}
 
-    public User getOwner() {
-        return owner;
-    }
+	public void setDataFrequency(int dataFrequency) {
+		this.dataFrequency = dataFrequency;
+	}
 
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setSensors(List<Sensor> sensors) {
-        this.sensors = sensors;
-    }
+	public String getToken() {
+		return this.token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Sensor> getSensors() {
+		return this.deviceSensors;
+	}
+
+	public void setSensors(List<Sensor> deviceSensors) {
+		this.deviceSensors = deviceSensors;
+	}
+
+	public Sensor addSensor(Sensor deviceSensor) {
+		getSensors().add(deviceSensor);
+		deviceSensor.setDevice(this);
+
+		return deviceSensor;
+	}
+
+	public Sensor removeSensor(Sensor deviceSensor) {
+		getSensors().remove(deviceSensor);
+		deviceSensor.setDevice(null);
+
+		return deviceSensor;
+	}
 
 }

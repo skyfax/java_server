@@ -10,13 +10,17 @@ public class UserConverter {
 
 
     public static UserDTO toUserDTO(User user){
-        UserDTO result = new UserDTO();
+        UserDTO result = null;
 
-        result.setPhone(user.getPhone());
-        result.setUserId(user.getId());
-        result.setEmail(user.getEmail());
-        user.setUsername(user.getUsername());
-
+        if(user != null){
+        	result = new UserDTO();
+        	
+            result.setPhone(user.getPhone());
+            result.setUserId(user.getId());
+            result.setEmail(user.getEmail());
+            result.setUsername(user.getUsername());
+        }
+        
         return result;
     }
 }
