@@ -38,7 +38,7 @@ public class SensorConverter {
 		
 		s.setId(sensor.getId());
 		s.setValue(sensor.getValue());
-		s.setSensorId(sensor.getSensorId());
+		s.setSensorId(sensor.getSensor().getId());
 		
 		return s;
 	}

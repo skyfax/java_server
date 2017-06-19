@@ -8,3 +8,68 @@ body {
 .navbar {
   margin-bottom: 20px;
 }
+
+
+ .devIcon {
+   background: url('../images/iot_icon.png');
+   height: 64px;
+   width: 64px;
+ }
+ 
+ .addIcon {
+  background: url('../images/add.png');
+  height: 100%;
+  width: 100%;
+}
+
+.removeIcon {
+  background: url('../images/remove.png');
+  height: 64px;
+  width: 64px;
+}
+
+.editIcon {
+  background: url('../images/edit.png');
+  height: 100px;
+  width: 100px;
+}
+
+ .butStyle {
+   color: #fff;
+   background-color: #337ab7;
+   border-color: #2e6da4;
+   text-align: center;
+   padding: 0 0 0 0;
+ }
+
+ .inpStyle {
+   color: #555;
+   background-color: #fff;
+   text-align: center;
+   padding: 0 0 0 0;
+ }
+ 
+ 
+ .spacer {
+ 	height: 20%;
+ }
+
+.spacer2 {
+  height: 40px;
+}
+
+
+.modal-body .form-horizontal .col-sm-10 {
+    width: 50%
+}
+
+.modal-body .form-horizontal .col-sm-2 {
+	width: 30%
+}
+
+.modal-body .form-horizontal .control-label {
+    text-align: left;
+}
+.modal-body .form-horizontal .col-sm-offset-2 {
+    margin-left: 15px;
+}

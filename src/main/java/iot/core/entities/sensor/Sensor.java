@@ -9,6 +9,11 @@ import java.io.Serializable;
 @Table(name="sensors")
 public class Sensor implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9166387867711082391L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

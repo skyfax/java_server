@@ -16,6 +16,7 @@
     <script src="lib/js/iot.js"></script>
     <script src="lib/js/jquery-3.2.1.min.js"></script>
     <script src="lib/js/requests.js"></script>
+     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -29,15 +30,227 @@
 
     <!-- Main component for a primary marketing message or call to action -->
     <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work.
-            It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-            <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-        </p>
+    	<div class="row">
+    	    <div class="col-xs-12 col-sm-4"></div>
+    	   	<div class="col-xs-12 col-sm-4"></div>
+    		<div class="col-xs-12 col-sm-4">
+    			 <button type="button" id="addDeviceButton" class="pull-right btn btn-md btn-primary right" data-toggle="modal" data-target="#myModalHorizontal">Add Device</button>
+    		
+    		<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    			<div class="modal-dialog">
+        			<div class="modal-content">
+				        <!-- Modal Header -->
+				        <div class="modal-header">
+				             <h4 class="modal-title" id="myModalLabel">Add device</h4>
+				        </div>
+	            
+			            <!-- Modal Body -->
+			            <div class="modal-body">
+			                
+			                <form class="form-horizontal" role="form">
+			                  <div class="form-group">
+			                    <label  class="control-label col-sm-2" for="inputDeviceName">Device name</label>
+			                    <div class="col-sm-10">
+			                        <input type="text" class="form-control" id="inputDeviceName" placeholder="Name"/>
+			                    </div>
+			                  </div>
+			             	  <div class="form-group">
+			                    <label  class="control-label col-sm-2" for="inputDeviceSN">Device SN</label>
+			                    <div class="col-sm-10">
+			                        <input type="text" class="form-control" id="inputDeviceSN" placeholder="Device Serial Number( unique)"/>
+			                    </div>
+			                  </div>
+			                  <div class="form-group">
+			                    <label class="col-sm-2 control-label" for="inputFrequency" >Frequency</label>
+			                    <div class="col-sm-10">
+			                        <input type="number" class="form-control" id="inputFrequency" placeholder="Frequency"/>
+			                    </div>
+			                  </div>
+			                  <div class="form-group">
+			                    <label class="col-sm-2 control-label" for="inputToken" >Token</label>
+			                    <div class="col-sm-10">
+			                        <input type="number" class="form-control" id="inputFrequency" placeholder="Token"/>
+			                    </div>
+			                  </div>
+			                </form>
+			            </div>
+			            
+			            <!-- Modal Footer -->
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			                <button type="button" class="btn btn-primary" onclick="addNewDevice()">Save changes</button>
+			            </div>
+       			 	</div>
+    			</div>
+			</div>
+    		
+    	<!-- End Modal -->	
+    		</div>
+    	</div>
+    	
+    	<div id="deviceList">
+				<div class="row">
+    				<div class="col-xs-6 col-sm-2">
+        				<div class="devIcon"></div>
+                    </div>
+				    <div class="col-xs-6 col-sm-4">
+				        <div style="color: black;">
+				            <h3>Device Name</h3>
+				        </div>
+				    </div>
+				    <div class="col-xs-6 col-sm-6">
+				        <!--<a href="edit({{dev.id}}" class="">-->
+				            <img src="lib/images/edit.png" width="25" height="25" style="margin-top: 20px">
+				        <!--</a>-->
+				        <!--<a href="#" class="">-->
+				            <img src="lib/images/remove.png" width="25" height="25" style="margin-top: 20px">
+				        <!--</a>-->
+				    </div>
+				</div>
+
+				<div class="row">
+				    <div class="col-xs-6 col-sm-2"></div>
+				    <div class="col-xs-6 col-sm-6">
+				        <div class="row">
+				            <div class="col-xs-6 col-sm-4" style="padding: 5px 0 5px 0;">
+				                <div class="butStyle"> Data Frequency</div>
+				            </div>
+				            <div class="col-xs-6 col-sm-4" style="padding: 5px 0 5px 0;">
+				                <div class="inpStyle"> {{dev.frequency}}</div>
+				            </div>
+				        </div>
+				    </div>
+				    <div class="col-xs-6 col-sm-4"></div>
+				</div>
+
+				<div class="row">
+				    <div class="col-xs-6 col-sm-2"></div>
+				    <div class="col-xs-6 col-sm-6">
+				        <div class="row">
+				            <div class="col-xs-6 col-sm-4" style="padding: 5px 0 5px 0;">
+				                <div class="butStyle">Sensors</div>
+				            </div>
+				            <div class="col-xs-6 col-sm-4" style="padding: 5px 0 5px 5px;">
+				                <!--<a href="#" class="" >-->
+				                    <img src="lib/images/add.png"  width="20" height="20">
+				                <!--</a>-->
+				            </div>
+				        </div>
+				    </div>
+				    <div class="col-xs-6 col-sm-4"></div>
+				</div>
+				<div class="row">
+				    <div class="col-xs-6 col-sm-2"></div>
+				    <div class="col-xs-6 col-sm-6"></div>
+				    <div class="col-xs-6 col-sm-4"></div>
+				</div>
+				
+				<div id="sensorList">
+					<div class="sensBackground">
+					    <div class="row">
+					        <div class="col-xs-6 col-sm-2"></div>
+					        <div class="col-xs-6 col-sm-6">
+					            <div class="row">
+					                <div class="col-xs-6 col-sm-2" style="padding: 5px 0 5px 0;"></div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 5px 0 5px 0;">
+					                    <div class="butStyle" style="background-color: #00a379">Type</div>
+					                </div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 5px 0 5px 0;">
+					                    <div class="inpStyle" style="background-color: #00a379"> {{sens.name}}</div>
+					                </div>
+					                <div class="col-xs-6 col-sm-2" style="padding: 5px 0 5px 5px;">
+					                    <!--<a href="#" class="">-->
+					                        <img src="lib/images/edit.png" width="17" height="17">
+					                    <!--</a>-->
+					                    <!--<a href="#" class="">-->
+					                        <img src="lib/images/remove.png" width="17" height="17">
+					                    <!--</a>-->
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-xs-6 col-sm-4"></div>
+					    </div>
+					
+					    <div class="row">
+					        <div class="col-xs-6 col-sm-2"></div>
+					        <div class="col-xs-6 col-sm-6">
+					            <div class="row">
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;"></div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="butStyle">Min. Value</div>
+					                </div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="inpStyle"> {{sens.minVal}}</div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-xs-6 col-sm-4"></div>
+					    </div>
+					
+					    <div class="row">
+					        <div class="col-xs-6 col-sm-2"></div>
+					        <div class="col-xs-6 col-sm-6">
+					            <div class="row">
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;"></div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="butStyle">Max. Value</div>
+					                </div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="inpStyle"> {{sens.maxVal}}</div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-xs-6 col-sm-4"></div>
+					    </div>
+					
+					    <div class="row">
+					        <div class="col-xs-6 col-sm-2"></div>
+					        <div class="col-xs-6 col-sm-6">
+					            <div class="row">
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;"></div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="butStyle">Event Enable</div>
+					                </div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="inpStyle"> {{sens.eventEnabled}}</div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-xs-6 col-sm-4"></div>
+					    </div>
+					
+					    <div class="row">
+					        <div class="col-xs-6 col-sm-2"></div>
+					        <div class="col-xs-6 col-sm-6">
+					            <div class="row">
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;"></div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="butStyle">Last Value Read</div>
+					                </div>
+					                <div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">
+					                    <div class="inpStyle"> {{sens.lastValueRead}}</div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-xs-6 col-sm-4"></div>
+					    </div>		
+					</div>
+				</div>
+				
+				<div class="row">
+				    <div class="col-xs-6 col-sm-2"></div>
+				    <div class="col-xs-6 col-sm-6"></div>
+				    <div class="col-xs-6 col-sm-4"></div>
+				</div>
+    	</div>    
     </div>
 
 </div> <!-- /container -->
+
+
+
+
+
 
 
 </body>
