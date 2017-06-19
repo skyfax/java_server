@@ -3,10 +3,11 @@ package iot.core.entities.sensor;
 import iot.core.entities.device.Device;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@NamedQuery(name="Sensor.findAll", query="SELECT s FROM Sensor s")
-public class Sensor {
+@Table(name="sensors")
+public class Sensor implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

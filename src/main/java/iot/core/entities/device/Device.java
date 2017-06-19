@@ -3,14 +3,7 @@ package iot.core.entities.device;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import iot.core.entities.sensor.Sensor;
 import iot.core.entities.user.User;
@@ -21,6 +14,7 @@ import iot.core.entities.user.User;
  * 
  */
 @Entity
+@Table(name="devices")
 @NamedQuery(name="Device.findAll", query="SELECT d FROM Device d")
 public class Device implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -27,7 +27,7 @@
               password: $("#inputPassword").val()
             },
             function(data){
-				if(data.status == "ok"){
+				if(data.status === "ok"){
 					sessionStorage.setItem("userId",data.userId);
 					sessionStorage.setItem("username",data.username);
 					
@@ -53,7 +53,7 @@
 
       <form class="form-signin">
         <h2 class="form-signin-heading">Please Sign In</h2>
-        <label for="inputEmail" class="sr-only">Username</label>
+        <label for="inputUsername" class="sr-only">Username</label>
         <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
