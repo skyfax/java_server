@@ -28,6 +28,8 @@ public class Device implements Serializable {
 	private String name;
 
 	private String token;
+	
+	private String deviceSN;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -103,4 +105,12 @@ public class Device implements Serializable {
 		return deviceSensor;
 	}
 
+	public String getDeviceSN() {
+		return deviceSN;
+	}
+
+	public void setDeviceSN(String deviceSN) {
+		this.deviceSN = deviceSN;
+	}
+	
 }

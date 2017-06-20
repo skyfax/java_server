@@ -15,7 +15,7 @@
     <link href="lib/css/signin.css" rel="stylesheet">
     <script src="lib/js/iot.js"></script>
     <script src="lib/js/jquery-3.2.1.min.js"></script>
-    <script src="lib/js/requests.js"></script>
+
 
 </head>
 
@@ -101,4 +101,6 @@
 <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
+
+    <script src="lib/js/requests.js"></script>
 </html>

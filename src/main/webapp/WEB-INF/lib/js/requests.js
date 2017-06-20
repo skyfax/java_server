@@ -31,3 +31,55 @@ $(document).ready(function(){
 
 
 
+
+function addNewDevice(button, action) {
+    var xmlhttp = new XMLHttpRequest();
+    var parentModal = button.parentElement.parentElement,
+    	id = $(parentModal).find("#inputId"),
+    	frequency = $(parentModal).find("#inputFrequency"),
+    	name = $(parentModal).find("#inputDeviceName"),
+    	deviceSn = $(parentModal).find("#inputDeviceSN"),
+    	token = $(parentModal).find("#inputToken"),
+    	url = "/iot/device/addDevice";
+    
+    
+    var device = {
+    		"id" : id.val(),
+    		"dataFrequency" : frequency.val(),
+    		"name": name.val(),
+    		"deviceSN": deviceSn.val(),
+    		"token": token.val()
+    			
+    }
+    
+    if(action === "update"){
+    	url =  "/iot/device/editDevice";
+    }
+    
+	$.ajax({
+		type : "POST",
+		url : url,
+		async : false,
+		data : JSON.stringify(device),
+		contentType : "application/json",
+		complete : function(data) {
+			if (data.statusText == "success") {
+				alert("data saved");
+			} else {
+				alert("Could not register");
+			}
+		}
+	});
+    
+}
+
+
+$(function() {
+    
+	$(".logOut").click(function(){
+		sessionStorage.removeItem("userId");
+		sessionStorage.removeItem("username");
+		
+		window.location.href= "/iot/index";
+	});
+});

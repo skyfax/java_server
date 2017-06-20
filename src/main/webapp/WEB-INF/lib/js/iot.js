@@ -41,19 +41,9 @@ function displayNavBar(page){
       '</nav>';
 
       document.getElementById("nBar").innerHTML = html;
+      
+//      if(userId != null && ())
 }
-
-
-
-$(function() {
-    
-	$(".logOut").click(function(){
-		sessionStorage.removeItem("userId");
-		sessionStorage.removeItem("username");
-		
-		window.location.href= "/iot/index";
-	});
-});
 
 
 function isPageActive(sentPage, page){

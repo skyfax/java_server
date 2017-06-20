@@ -24,6 +24,7 @@ public class DeviceController {
 	@RequestMapping(value = "/addDevice", method = RequestMethod.POST)
 	public @ResponseBody Boolean addDevice(@RequestBody DeviceDTO device) {
 
+		device.setId(null);
 		// TODO get user id from session
 		long userId = 1;
 		return Boolean.valueOf(deviceService.addDevice(device, userId));

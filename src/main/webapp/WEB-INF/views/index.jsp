@@ -16,7 +16,6 @@
     <link href="lib/css/navbar.css" rel="stylesheet">
     <script src="lib/js/iot.js"></script>
     <script src="lib/js/jquery-3.2.1.min.js"></script>
-    <script src="lib/js/requests.js"></script>
 
   </head>
 
@@ -39,4 +38,6 @@
     </div> <!-- /container -->
 
   </body>
+  
+  <script src="lib/js/requests.js"></script>
 </html>

@@ -15,7 +15,7 @@
     <link href="lib/css/navbar.css" rel="stylesheet">
     <script src="lib/js/iot.js"></script>
     <script src="lib/js/jquery-3.2.1.min.js"></script>
-    <script src="lib/js/requests.js"></script>
+
      <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
@@ -51,34 +51,34 @@
 			                  <div class="form-group">
 			                    <label  class="control-label col-sm-2" for="inputDeviceName">Device name</label>
 			                    <div class="col-sm-10">
-			                        <input type="text" class="form-control" id="inputDeviceName" placeholder="Name"/>
+			                        <input type="text" class="form-control" id="inputDeviceName" placeholder="Name" required/>
 			                    </div>
 			                  </div>
 			             	  <div class="form-group">
 			                    <label  class="control-label col-sm-2" for="inputDeviceSN">Device SN</label>
 			                    <div class="col-sm-10">
-			                        <input type="text" class="form-control" id="inputDeviceSN" placeholder="Device Serial Number( unique)"/>
+			                        <input type="text" class="form-control" id="inputDeviceSN" placeholder="Device Serial Number( unique)" required/>
 			                    </div>
 			                  </div>
 			                  <div class="form-group">
 			                    <label class="col-sm-2 control-label" for="inputFrequency" >Frequency</label>
 			                    <div class="col-sm-10">
-			                        <input type="number" class="form-control" id="inputFrequency" placeholder="Frequency"/>
+			                        <input type="number" class="form-control" id="inputFrequency" placeholder="Frequency" required/>
 			                    </div>
 			                  </div>
 			                  <div class="form-group">
 			                    <label class="col-sm-2 control-label" for="inputToken" >Token</label>
 			                    <div class="col-sm-10">
-			                        <input type="number" class="form-control" id="inputFrequency" placeholder="Token"/>
+			                        <input type="text" class="form-control" id="inputToken" placeholder="Token" required/>
 			                    </div>
 			                  </div>
 			                </form>
 			            </div>
-			            
+			             <input type="hidden" id="inputId"/>
 			            <!-- Modal Footer -->
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			                <button type="button" class="btn btn-primary" onclick="addNewDevice()">Save changes</button>
+			                <button type="button" class="btn btn-primary" onclick="addNewDevice(this,'insert')">Save changes</button>
 			            </div>
        			 	</div>
     			</div>
@@ -254,4 +254,6 @@
 
 
 </body>
+
+<script src="lib/js/requests.js"></script>
 </html>
