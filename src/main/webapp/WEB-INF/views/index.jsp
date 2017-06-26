@@ -29,10 +29,24 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1 class="center-block">Search</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-         </p>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-5">
+            <h2 >Search</h2>
+          </div>
+        </div>
+
+        <form class="form-signin">
+
+          <label for="inputText" class="sr-only">Text</label>
+          <input type="text" id="inputText" class="form-control" placeholder="Search data using  place, type or date e.g. Temperature in Cluj" required autofocus>
+          <p></p>
+          <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+              <button id="submitText" class="btn btn-lg btn-primary">Search</button>
+            </div>
+          </div>
+
+        </form>
       </div>
 
     </div> <!-- /container -->
