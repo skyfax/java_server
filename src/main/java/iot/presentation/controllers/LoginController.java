@@ -11,34 +11,43 @@ import iot.core.services.interfaces.UserService;
 import iot.presentation.transport.UserDTO;
 import net.minidev.json.JSONObject;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
 
+    @RequestMapping(value = "/loginAction", method = RequestMethod.POST)
+    public @ResponseBody
+    JSONObject login(@RequestParam String name, @RequestParam String password, HttpSession session) {
+        JSONObject response = new JSONObject();
 
-	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
-	public @ResponseBody JSONObject login(@RequestParam String name, @RequestParam String password) {
-		JSONObject response = new JSONObject();
+        UserDTO user = userService.authenticateUser(name, password);
 
-		 UserDTO user = userService.authenticateUser(name, password);
+        if (user != null) {
+            response.put("status", "ok");
+            response.put("userId", user.getUserId());
+            response.put("username", user.getUsername());
+            session.setAttribute("userId", user.getUserId());
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("isAuthenticated", true);
+        } else {
+            response.put("status", "invalid");
+        }
 
-		if (user != null) {
-			response.put("status","ok");
-			response.put("userId", user.getUserId());
-			response.put("username", user.getUsername());
-		}else {
-			response.put("status", "invalid");
-		}
+        return response;
+    }
 
-		return response;
-	}
+    @RequestMapping(value = "/logOut")
+    public void sayHelloString(HttpSession session) {
 
-	@RequestMapping(value = "/loginTest")
-	public @ResponseBody String sayHelloString() {
-		return "Hello World dummy";
-	}
+        session.removeAttribute("userId");
+        session.removeAttribute("username");
+        session.removeAttribute("isAuthenticated");
+
+    }
 
 }

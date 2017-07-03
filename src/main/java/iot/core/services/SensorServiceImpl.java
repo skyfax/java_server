@@ -32,6 +32,7 @@ public class SensorServiceImpl implements SensorService {
 
 	@Override
 	public boolean addSensor(SensorDTO sensor) {
+
 		Sensor sen = sensor.toSensor();
 		Long deviceId = sensor.getDeviceId();
 		boolean result = false;
@@ -56,11 +57,11 @@ public class SensorServiceImpl implements SensorService {
 	public boolean editSensor(SensorDTO sensor) {
 		Sensor s = sensorRepo.getSensorById(sensor.getId());
 
-		s.setEventEnable(sensor.isEventEnable());
-		s.setMaxValue(sensor.getMaxValue());
-		s.setMinValue(sensor.getMinValue());
+		s.setIsEventEnabled(sensor.isEventEnable());
+		s.setMaxVal(sensor.getMaxValue());
+		s.setMinVal(sensor.getMinValue());
 		s.setName(sensor.getName());
-		s.setSensorType(sensor.getSensorType());
+		s.setSensorType(sensor.getSensorType().getValue());
 
 		boolean result = sensorRepo.editSensor(s);
 

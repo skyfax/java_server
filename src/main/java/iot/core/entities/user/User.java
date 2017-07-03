@@ -15,7 +15,7 @@ import iot.core.entities.role.Role;
  */
 @Entity
 @Table(name="users")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,9 +31,9 @@ public class User implements Serializable {
 
 	private String username;
 
-	//bi-directional many-to-one association to Device
-	@OneToMany(mappedBy="user")
-	private List<Device> devices;
+//	//bi-directional many-to-one association to Device
+//	@OneToMany(mappedBy="user")
+//	private List<Device> devices;
 
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -83,27 +83,27 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public List<Device> getDevices() {
-		return this.devices;
-	}
-
-	public void setDevices(List<Device> devices) {
-		this.devices = devices;
-	}
-
-	public Device addDevice(Device device) {
-		getDevices().add(device);
-		device.setUser(this);
-
-		return device;
-	}
-
-	public Device removeDevice(Device device) {
-		getDevices().remove(device);
-		device.setUser(null);
-
-		return device;
-	}
+//	public List<Device> getDevices() {
+//		return this.devices;
+//	}
+//
+//	public void setDevices(List<Device> devices) {
+//		this.devices = devices;
+//	}
+//
+//	public Device addDevice(Device device) {
+//		getDevices().add(device);
+//		device.setOwnerId(this.getId());
+//
+//		return device;
+//	}
+//
+//	public Device removeDevice(Device device) {
+//		getDevices().remove(device);
+//		device.setOwnerId(null);
+//
+//		return device;
+//	}
 
 	public Role getRole() {
 		return this.role;

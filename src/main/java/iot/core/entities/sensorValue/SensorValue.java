@@ -22,7 +22,7 @@ public class SensorValue implements Serializable {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "sensor_id", nullable = false)
+	@JoinColumn(name = "sensorId", nullable = false)
 	private Sensor sensor;
 
 	private double value;

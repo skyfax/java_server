@@ -54,7 +54,7 @@ public class DeviceRepositoryImpl implements DeviceRepo {
 		Root<Device> device = cq.from(Device.class);
 
 		cq.select(device);
-		cq.where(cb.equal(device.get("owner.id"), userId));
+		cq.where(cb.equal(device.get("ownerId"), userId));
 		Query query = em.createQuery(cq);
 
 		@SuppressWarnings("unchecked")

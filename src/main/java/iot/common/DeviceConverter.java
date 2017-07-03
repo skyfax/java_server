@@ -18,6 +18,10 @@ public class DeviceConverter {
 		d.setId(device.getId());
 		d.setName(device.getName());
 		d.setToken(device.getToken());
+		d.setAccessLevel(device.getAccessLevel());
+		d.setLocation(device.getLocation());
+		d.setDeviceSN(device.getDeviceSN());
+
 		d.setSensors(SensorConverter.toSensorDTOList(device.getSensors()));
 
 		return d;

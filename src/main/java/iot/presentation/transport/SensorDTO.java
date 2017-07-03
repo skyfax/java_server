@@ -1,29 +1,51 @@
 package iot.presentation.transport;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import iot.core.entities.sensor.Sensor;
 import iot.core.entities.sensor.SensorType;
 
 public class SensorDTO {
 
-    private long id;
+    private Long id;
 
     private String name;
 
-    private double minValue;
+    private Double minValue;
 
-    private double maxValue;
+    private Double maxValue;
 
-    private boolean isEventEnable;
+    private Integer isEventEnable;
 
     private SensorType sensorType;
-    
+
     private Long deviceId;
 
-    public long getId() {
+    @JsonCreator
+    public SensorDTO(@JsonProperty("id") Long id,
+                     @JsonProperty("name") String name,
+                     @JsonProperty("sensorType") int sensorType,
+                     @JsonProperty("deviceId") Long deviceId,
+                     @JsonProperty("minValue") Double minValue,
+                     @JsonProperty("maxValue") Double maxValue,
+                     @JsonProperty("isEventEnable") Integer isEventEnable) {
+        this.id = id;
+        this.name = name;
+        this.maxValue = maxValue;
+        this.minValue = minValue;
+        this.isEventEnable = isEventEnable;
+        this.setSensorType(SensorType.getSensorType(sensorType));
+        this.deviceId = deviceId;
+    }
+
+    public SensorDTO() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,11 +73,11 @@ public class SensorDTO {
         this.maxValue = maxValue;
     }
 
-    public boolean isEventEnable() {
+    public Integer isEventEnable() {
         return isEventEnable;
     }
 
-    public void setEventEnable(boolean eventEnable) {
+    public void setEventEnable(Integer eventEnable) {
         isEventEnable = eventEnable;
     }
 
@@ -66,25 +88,25 @@ public class SensorDTO {
     public void setSensorType(SensorType sensorType) {
         this.sensorType = sensorType;
     }
-        
+
     public Long getDeviceId() {
-		return deviceId;
-	}
+        return deviceId;
+    }
 
-	public void setDeviceId(Long deviceId) {
-		this.deviceId = deviceId;
-	}
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
+    }
 
-	public Sensor toSensor(){
-    	Sensor sensor = new Sensor();
-    	
-    	sensor.setEventEnable(isEventEnable);
-    	sensor.setId(id);
-    	sensor.setMaxValue(maxValue);
-    	sensor.setMinValue(minValue);
-    	sensor.setName(name);
-    	sensor.setSensorType(sensorType);
+    public Sensor toSensor() {
+        Sensor sensor = new Sensor();
 
-    	return sensor;
+        sensor.setIsEventEnabled(isEventEnable);
+        sensor.setId(id);
+        sensor.setMaxVal(maxValue);
+        sensor.setMinVal(minValue);
+        sensor.setName(name);
+        sensor.setSensorType(sensorType.getValue());
+
+        return sensor;
     }
 }

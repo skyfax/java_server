@@ -2,67 +2,94 @@ package iot.presentation.controllers;
 
 import java.util.List;
 
+import iot.utils.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import iot.core.services.interfaces.DeviceService;
 import iot.presentation.transport.DeviceDTO;
 import net.minidev.json.JSONObject;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/device")
+@SessionAttributes("user")
 public class DeviceController {
 
-	@Autowired
-	DeviceService deviceService;
+    @Autowired
+    DeviceService deviceService;
 
-	@RequestMapping(value = "/addDevice", method = RequestMethod.POST)
-	public @ResponseBody Boolean addDevice(@RequestBody DeviceDTO device) {
+    @RequestMapping(value = "/addDevice", method = RequestMethod.POST)
+    public @ResponseBody
+    JSONObject addDevice(@RequestBody DeviceDTO device, HttpSession session) {
+        JSONObject obj = new JSONObject();
 
-		device.setId(null);
-		// TODO get user id from session
-		long userId = 1;
-		return Boolean.valueOf(deviceService.addDevice(device, userId));
-	}
+        if (AuthUtils.isUserAuthenticated(session)) {
+            Long userId = AuthUtils.getUserId(session);
+            device.setId(null);
+            Boolean response = deviceService.addDevice(device, userId);
+            obj.put("statusText", response);
+        }
 
-	@RequestMapping(value = "/{deviceId}", method = RequestMethod.GET)
-	public @ResponseBody JSONObject getDevice(@RequestParam long deviceId) {
-		JSONObject object = new JSONObject();
-		DeviceDTO dev = deviceService.getDeviceById(deviceId);
 
-		object.put("device", dev);
+        return obj;
+    }
 
-		return object;
-	}
+    @RequestMapping(value = "/{deviceId}", method = RequestMethod.GET)
+    public @ResponseBody
+    JSONObject getDevice(@RequestParam long deviceId, HttpSession session) {
+        JSONObject object = new JSONObject();
 
-	@RequestMapping(value = "/removeDevice", method = RequestMethod.POST)
-	public @ResponseBody Boolean removeDevice(@RequestParam long deviceId) {
+        if (AuthUtils.isUserAuthenticated(session)) {
+            DeviceDTO dev = deviceService.getDeviceById(deviceId);
+            object.put("device", dev);
+        }
 
-		return Boolean.valueOf(deviceService.removeDevice(deviceId));
-	}
+        return object;
+    }
 
-	@RequestMapping(value = "/getDevices", method = RequestMethod.POST)
-	public @ResponseBody JSONObject getDevices() {
-		JSONObject response = new JSONObject();
+    @RequestMapping(value = "/removeDevice", method = RequestMethod.POST)
+    public @ResponseBody
+    JSONObject removeDevice(@RequestParam long deviceId, HttpSession session) {
+        JSONObject obj = new JSONObject();
 
-		/// TODO add session and getUser id from there
-		long userId = 1;
-		List<DeviceDTO> devices = deviceService.getUserDevices(userId);
+        if (AuthUtils.isUserAuthenticated(session)) {
+            Long userId = AuthUtils.getUserId(session);
+            obj.put("statusText", deviceService.removeDevice(deviceId));
+        }
 
-		response.put("devices", devices);
+        return obj;
+    }
 
-		return response;
-	}
+    @RequestMapping(value = "/getDevices", method = RequestMethod.GET)
+    public @ResponseBody
+    JSONObject getDevices(HttpSession session) {
+        JSONObject response = new JSONObject();
 
-	@RequestMapping(value = "/editDevice", method = RequestMethod.POST)
-	public @ResponseBody Boolean editDevice(@RequestBody DeviceDTO device) {
+        if (AuthUtils.isUserAuthenticated(session)) {
+            Long userId = AuthUtils.getUserId(session);
+            List<DeviceDTO> devices = deviceService.getUserDevices(userId);
+            response.put("status", "ok");
+            response.put("devices", devices);
+        } else {
+            response.put("status", "error");
+        }
 
-		return Boolean.valueOf(deviceService.editDevice(device));
-	}
+        return response;
+    }
+
+    @RequestMapping(value = "/editDevice", method = RequestMethod.POST)
+    public @ResponseBody
+    Boolean editDevice(@RequestBody DeviceDTO device, HttpSession session) {
+        boolean response = false;
+
+        if (AuthUtils.isUserAuthenticated(session)) {
+            response = deviceService.editDevice(device);
+        }
+
+        return response;
+    }
 
 }

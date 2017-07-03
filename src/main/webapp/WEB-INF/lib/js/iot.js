@@ -6,7 +6,7 @@ function displayNavBar(page){
 		activeTabsRight = '',
 		userId = sessionStorage.getItem("userId");
 
-	if( userId != null){
+	if( userId !== null){
 		activeTabsLeft = '<li ' + isPageActive(page,'devices') + '><a href="devices">Devices</a></li>';
 		activeTabsRight = 	'<li ' + isPageActive(page,'account') + '><a href="account">Account</a></li>' +
               				'<li class="logOut"><a href="">Log Out</a></li>';

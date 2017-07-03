@@ -14,25 +14,30 @@ public class DeviceDTO {
     private String name;
     private String deviceSN;
     private String token;
-    
+    private int accessLevel;
+    private String location;
+
     private List<SensorDTO> sensors;
 
-    
+
     @JsonCreator
     public DeviceDTO(@JsonProperty("id") Long id, @JsonProperty("dataFrequency") int dataFrequency, @JsonProperty("name") String name,
-			@JsonProperty("deviceSN") String deviceSN, @JsonProperty("token") String token){
-    	
-    	this.id = id;
-    	this.dataFrequency = dataFrequency;
-    	this.name = name;
-    	this.deviceSN = deviceSN;
-    	this.token = token;
+                     @JsonProperty("deviceSN") String deviceSN, @JsonProperty("token") String token, @JsonProperty("accessLevel") int accessLevel,
+                     @JsonProperty("location") String location) {
+
+        this.id = id;
+        this.dataFrequency = dataFrequency;
+        this.name = name;
+        this.deviceSN = deviceSN;
+        this.token = token;
+        this.accessLevel = accessLevel;
+        this.location = location;
     }
-    
-    public DeviceDTO(){
-    	
+
+    public DeviceDTO() {
+
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -64,34 +69,50 @@ public class DeviceDTO {
     public void setToken(String token) {
         this.token = token;
     }
-      
+
     public List<SensorDTO> getSensors() {
-		return sensors;
-	}
-
-	public void setSensors(List<SensorDTO> sensors) {
-		this.sensors = sensors;
-	}
-
-	public Device toDevice(){
-    	Device device = new Device();
-    	
-    	device.setDataFrequency(dataFrequency);
-    	device.setId(id);
-    	device.setName(name);
-    	device.setToken(token);
-    	
-    	return device;
+        return sensors;
     }
 
-	public String getDeviceSN() {
-		return deviceSN;
-	}
+    public void setSensors(List<SensorDTO> sensors) {
+        this.sensors = sensors;
+    }
 
-	public void setDeviceSN(String deviceSN) {
-		this.deviceSN = deviceSN;
-	}
-	
-	
-    
+    public Device toDevice() {
+        Device device = new Device();
+
+        device.setDataFrequency(dataFrequency);
+        device.setId(id);
+        device.setName(name);
+        device.setToken(token);
+        device.setAccessLevel(accessLevel);
+        device.setLocation(location);
+        device.setDeviceSN(deviceSN);
+
+        return device;
+    }
+
+    public String getDeviceSN() {
+        return deviceSN;
+    }
+
+    public void setDeviceSN(String deviceSN) {
+        this.deviceSN = deviceSN;
+    }
+
+    public int getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(int accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }

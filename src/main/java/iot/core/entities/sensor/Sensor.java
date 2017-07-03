@@ -6,85 +6,87 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="sensors")
-public class Sensor implements Serializable{
+@Table(name = "sensors")
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9166387867711082391L;
+public class Sensor implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private String name;
+    private Integer isEventEnabled;
 
-	private double minValue;
-	
-	private double maxValue;
-	
-	private boolean isEventEnable;
-	
-	private SensorType sensorType;
+    private Double maxVal;
 
-	@ManyToOne
-	private Device device;
+    private Double minVal;
 
-	public long getId() {
-		return id;
-	}
+    private String name;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    private int sensorType;
 
-	public String getName() {
-		return name;
-	}
+    //bi-directional many-to-one association to Device
+    @ManyToOne
+    @JoinColumn(name = "deviceId")
+    private Device device;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Sensor() {
+    }
 
-	public double getMinValue() {
-		return minValue;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setMinValue(double minValue) {
-		this.minValue = minValue;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public double getMaxValue() {
-		return maxValue;
-	}
+    public Integer getIsEventEnabled() {
+        return this.isEventEnabled;
+    }
 
-	public void setMaxValue(double maxValue) {
-		this.maxValue = maxValue;
-	}
+    public void setIsEventEnabled(Integer isEventEnabled) {
+        this.isEventEnabled = isEventEnabled;
+    }
 
-	public boolean isEventEnable() {
-		return isEventEnable;
-	}
+    public Double getMaxVal() {
+        return this.maxVal;
+    }
 
-	public void setEventEnable(boolean isEventEnable) {
-		this.isEventEnable = isEventEnable;
-	}
+    public void setMaxVal(Double maxVal) {
+        this.maxVal = maxVal;
+    }
 
-	public Device getDevice() {
-		return device;
-	}
+    public Double getMinVal() {
+        return this.minVal;
+    }
 
-	public void setDevice(Device device) {
-		this.device = device;
-	}
+    public void setMinVal(Double minVal) {
+        this.minVal = minVal;
+    }
 
-	public SensorType getSensorType() {
-		return sensorType;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setSensorType(SensorType sensorType) {
-		this.sensorType = sensorType;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSensorType() {
+        return this.sensorType;
+    }
+
+    public void setSensorType(int sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public Device getDevice() {
+        return this.device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 
 }

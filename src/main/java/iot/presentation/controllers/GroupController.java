@@ -15,13 +15,13 @@ import iot.presentation.transport.GroupDTO;
 public class GroupController {
     @Autowired
     GroupService groupService;
-    
+
     @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
     public @ResponseBody Boolean addDevice(@RequestBody GroupDTO group){
 
 //        return Boolean.valueOf(groupService.));
-    	
+
     	return null;
     }
-    
+
 }

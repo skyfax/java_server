@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
 import iot.core.entities.sensorValue.SensorValue;
@@ -41,13 +42,11 @@ public class SensorValueRepositoryImpl implements SensorValueRepo {
 
 	@Override
 	public List<SensorValue> getSensorValues(long sensorId) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<SensorValue> cq = cb.createQuery(SensorValue.class);
-		Root<SensorValue> sv = cq.from(SensorValue.class);
+		String sql = "SELECT s FROM SensorValue s WHERE s.sensor.id = :sensorId";
 
-		cq.select(sv);
-		cq.where(cb.equal(sv.get("sensor.id"), sensorId));
-		Query query = em.createQuery(cq);
+		Query query = em.createQuery(sql);
+		query.setParameter("sensorId", sensorId);
+		List results = query.getResultList();
 
 		@SuppressWarnings("unchecked")
 		List<SensorValue> result = query.getResultList();
