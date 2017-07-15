@@ -15,8 +15,6 @@ public class Sensor implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Integer isEventEnabled;
-
     private Double maxVal;
 
     private Double minVal;
@@ -26,7 +24,7 @@ public class Sensor implements Serializable {
     private int sensorType;
 
     //bi-directional many-to-one association to Device
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "deviceId")
     private Device device;
 
@@ -39,14 +37,6 @@ public class Sensor implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getIsEventEnabled() {
-        return this.isEventEnabled;
-    }
-
-    public void setIsEventEnabled(Integer isEventEnabled) {
-        this.isEventEnabled = isEventEnabled;
     }
 
     public Double getMaxVal() {

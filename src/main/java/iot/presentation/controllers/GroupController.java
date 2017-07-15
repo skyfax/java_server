@@ -24,4 +24,18 @@ public class GroupController {
     	return null;
     }
 
+    private void toBeDeleted(){
+        long id = 0;
+
+        groupService.addDeviceToGroup(id,id,id);
+        groupService.addGroup(new GroupDTO());
+        groupService.addUserToGroup(id,id,id);
+        groupService.removeDeviceFromGroup(id,id,id);
+        groupService.removeGroup(id,id);
+        groupService.removeUserFromGroup(id,id,id);
+        groupService.getGroupById(id,id);
+        groupService.getGroupList(id);
+        groupService.getGroupDevices(id);
+    }
+
 }

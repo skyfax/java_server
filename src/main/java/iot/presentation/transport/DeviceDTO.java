@@ -21,8 +21,9 @@ public class DeviceDTO {
 
 
     @JsonCreator
-    public DeviceDTO(@JsonProperty("id") Long id, @JsonProperty("dataFrequency") int dataFrequency, @JsonProperty("name") String name,
-                     @JsonProperty("deviceSN") String deviceSN, @JsonProperty("token") String token, @JsonProperty("accessLevel") int accessLevel,
+    public DeviceDTO(@JsonProperty("id") Long id, @JsonProperty("dataFrequency") int dataFrequency,
+                     @JsonProperty("name") String name, @JsonProperty("deviceSN") String deviceSN,
+                     @JsonProperty("token") String token, @JsonProperty("accessLevel") int accessLevel,
                      @JsonProperty("location") String location) {
 
         this.id = id;

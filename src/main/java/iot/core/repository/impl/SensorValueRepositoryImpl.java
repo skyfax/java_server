@@ -9,11 +9,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import iot.common.SearchCriteria;
 import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
 import iot.core.entities.sensorValue.SensorValue;
 import iot.core.repository.SensorValueRepo;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class SensorValueRepositoryImpl implements SensorValueRepo {
@@ -22,6 +24,7 @@ public class SensorValueRepositoryImpl implements SensorValueRepo {
 	EntityManager em;
 
 	@Override
+	@Transactional
 	public boolean addSensorValue(SensorValue sVal) {
 		em.persist(sVal);
 
@@ -52,6 +55,11 @@ public class SensorValueRepositoryImpl implements SensorValueRepo {
 		List<SensorValue> result = query.getResultList();
 		
 		return result;
+	}
+
+	@Override
+	public List<SensorValue> getSensorValuesForSearch(SearchCriteria criteria, boolean isLoggedIn, boolean isInGroup) {
+		return null;
 	}
 
 	private SensorValue getSensorValueById(long id) {

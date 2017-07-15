@@ -1,23 +1,26 @@
 package iot.core.services.interfaces;
 
 import iot.presentation.transport.DeviceDTO;
+import net.minidev.json.JSONObject;
 
+import javax.websocket.Session;
 import java.util.List;
 
 public interface DeviceService {
 	
-	public boolean addDevice(DeviceDTO device, long userId);
+	 boolean addDevice(DeviceDTO device, long userId);
 	
-	public boolean removeDevice(long deviceId);
+	 boolean removeDevice(long deviceId,long requesterId);
 	
-	public boolean editDevice(DeviceDTO device);
-	
-	public List<DeviceDTO> searchResults(String searchData);
-	
-	public List<DeviceDTO> getUserDevices(long userId);
-	
-	public List<DeviceDTO> getGroupDevices(long groupId);
+	 boolean editDevice(DeviceDTO device, long requesterId);
 
-	public DeviceDTO getDeviceById(long deviceId);
+	 List<DeviceDTO> getUserDevices(long userId);
+	
+	 DeviceDTO getDeviceById(long deviceId);
 
+	 void parseMessageFromDevice(String message, Session session);
+
+	 void putDeviceInPreAuthenticationList(Session session);
+
+	 void removeDeviceFromActiveConnections(Session session);
 }

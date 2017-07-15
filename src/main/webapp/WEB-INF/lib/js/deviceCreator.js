@@ -42,7 +42,7 @@ function buildDeviceHtmlCode(devices) {
                                             '<div class="form-group">' +
                                                 '<label class="control-label col-sm-2" for="editDeviceName' + deviceId + '">Device name</label>' +
                                                 '<div class="col-sm-10">' +
-                                                    '<input type="text" class="form-control" id="editDeviceName" placeholder="Name" value="' + device.name + '" required/>' +
+                                                    '<input type="text" class="form-control" id="editDeviceName'+ deviceId + '" placeholder="Name" value="' + device.name + '" required/>' +
                                                 '</div>' +
                                             '</div>' +
                                             '<div class="form-group">' +
@@ -78,7 +78,7 @@ function buildDeviceHtmlCode(devices) {
                                             '</div>' +
                                         '</form>' +
                                     '</div>' +
-                                    '<input type="hidden" id="editId" value="aaaa"/>' +
+                                    '<input type="hidden" id="editId' + deviceId + '" value="' + deviceId+ '"/>' +
                                     '<!-- Modal Footer -->' +
                                     '<div class="modal-footer">' +
                                         '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
@@ -200,15 +200,7 @@ function buildDeviceHtmlCode(devices) {
                                                                    'placeholder="Max. Value" required/>' +
                                                         '</div>' +
                                                     '</div>' +
-                                                    '<div class="form-group">' +
-                                                        '<label class="col-sm-2 control-label" for="addSensorEventEnabled' + deviceId + '">Event' +
-                                                            'Enabled</label>' +
-                                                        '<div class="col-sm-10">' +
-                                                            '<input type="text" class="form-control"' +
-                                                                   'id="addSensorEventEnabled' + deviceId + '" placeholder="Event Enabled"' +
-                                                                   'required/>' +
-                                                        '</div>' +
-                                                    '</div>' +
+
                                                 '</form>' +
                                             '</div>' +
                                             '<input type="hidden" id="deviceId' + deviceId + '" value="' + deviceId + '"/>' +
@@ -239,7 +231,7 @@ function buildDeviceHtmlCode(devices) {
 
             (device.sensors !== null ? buildSensorsHtmlCode(device.sensors) : "") +
 
-    '</div>+ +';
+    '</div>';
     }
 
     return html;
@@ -253,7 +245,12 @@ function viewSensorData(sensorId){
         },
         function (data) {
             if (data.values != null) {
-                alert("Data success"+ data.values);
+                let i,str ="";
+                for(i = 0;i< data.values.length; i++){
+                    let val = data.values[i];
+                    str += "SensId:"+val.sensorId + " Value: " +val.value + "\n";
+                }
+                alert("Data success: \n" + str);
             } else {
                 alert("Could not get sensor data");
             }
@@ -362,13 +359,6 @@ function buildSensorsHtmlCode(sensors) {
                                                                            'value="' + sensor.maxValue + '" required/>' +
                                                                 '</div>' +
                                                             '</div>' +
-                                                            '<div class="form-group">' +
-                                                                '<label class="col-sm-2 control-label" for="editSensorEventEnabled' + sensorId + '">Event Enabled</label>' +
-                                                                '<div class="col-sm-10">' +
-                                                                    '<input type="text" class="form-control" id="editSensorEventEnabled' + sensorId + '"' +
-                                                                           'placeholder="Event Enabled" value="' + sensor.isEventEnabled + '" required/>' +
-                                                                '</div>' +
-                                                            '</div>' +
                                                         '</form>' +
                                                     '</div>' +
                                                     '<input type="hidden" id="sensorId' + sensorId + '" value="' + sensorId + '"/>' +
@@ -420,38 +410,6 @@ function buildSensorsHtmlCode(sensors) {
                                 '</div>' +
                                 '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">' +
                                     '<div class="inpStyle">' + sensor.maxValue + '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="col-xs-6 col-sm-4"></div>' +
-                    '</div>' +
-
-                    '<div class="row">' +
-                        '<div class="col-xs-6 col-sm-2"></div>' +
-                        '<div class="col-xs-6 col-sm-6">' +
-                            '<div class="row">' +
-                                '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;"></div>' +
-                                '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">' +
-                                    '<div class="butStyle">Event Enable</div>' +
-                                '</div>' +
-                                '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">' +
-                                    '<div class="inpStyle">' + sensor.isEventEnabled + '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="col-xs-6 col-sm-4"></div>' +
-                    '</div>' +
-
-                    '<div class="row">' +
-                        '<div class="col-xs-6 col-sm-2"></div>' +
-                        '<div class="col-xs-6 col-sm-6">' +
-                            '<div class="row">' +
-                                '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;"></div>' +
-                                '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">' +
-                                    '<div class="butStyle">Last Value Read</div>' +
-                                '</div>' +
-                                '<div class="col-xs-6 col-sm-4" style="padding: 0 0 0 0;">' +
-                                    '<div class="inpStyle"> ' + sensor.lastValueRead + '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +

@@ -44,6 +44,20 @@ public class ViewController {
         return model;
     }
 
+    @RequestMapping(value = "/groups", method = RequestMethod.GET)
+    protected ModelAndView handleGroupsPage(HttpServletRequest request,
+                                            HttpServletResponse response, HttpSession session) throws Exception {
+        ModelAndView model;
+
+        if (AuthUtils.isUserAuthenticated(session)) {
+            model = new ModelAndView("groups");
+        } else {
+            model = new ModelAndView("login");
+        }
+
+        return model;
+    }
+
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     protected ModelAndView handleIndexPage(HttpServletRequest request,
                                            HttpServletResponse response) throws Exception {

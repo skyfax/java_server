@@ -2,6 +2,7 @@ package iot.core.services.interfaces;
 
 import java.util.List;
 
+import iot.presentation.transport.DeviceDTO;
 import iot.presentation.transport.GroupDTO;
 
 /**
@@ -9,17 +10,21 @@ import iot.presentation.transport.GroupDTO;
  */
 public interface GroupService {
 
-	public GroupDTO addGroup(GroupDTO group);
+	 GroupDTO addGroup(GroupDTO group);
 
-	public boolean removeGroup(long groupId);
+	 boolean removeGroup(long groupId, long requesterId);
 
-	public boolean addUserToGroup(long userId, long groupId);
+	 boolean addUserToGroup(long userId, long groupId, long requesterId);
 
-	public boolean addDeviceToGroup(long deviceId, long groupId);
+	 boolean addDeviceToGroup(long deviceId, long groupId, long requesterId);
 
-	public List<GroupDTO> getGroupList(long userId);
+	boolean removeDeviceFromGroup(long deviceId, long groupId,  long requesterId);
 
-	public GroupDTO getGroupById(long groupId);
+	boolean removeUserFromGroup(long deviceId, long groupId, long requesterId);
 
-	public GroupDTO editGroup(GroupDTO group);
+	 List<GroupDTO> getGroupList(long userId);
+
+	 GroupDTO getGroupById(long groupId,  long requesterId);
+
+	 List<DeviceDTO> getGroupDevices(long groupId);
 }

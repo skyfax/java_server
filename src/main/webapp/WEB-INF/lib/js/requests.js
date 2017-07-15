@@ -138,6 +138,21 @@ function addNewSensor(button, action, sensorId) {
 }
 
 
+function searchDevices(text){
+    $.post("/iot/device/removeDevice",
+        {
+            deviceId: deviceId
+        },
+        function (data) {
+            if (data.statusText === true) {
+                location.reload();
+            } else {
+                alert("Could not remove device.");
+            }
+
+        });
+}
+
 $(function () {
 
     $(".logOut").click(function () {

@@ -15,7 +15,6 @@ public class SensorConverter {
         SensorDTO s = new SensorDTO();
 
         s.setDeviceId(sensor.getDevice().getId());
-        s.setEventEnable(sensor.getIsEventEnabled());
         s.setMaxValue(sensor.getMaxVal());
         s.setMinValue(sensor.getMinVal());
         s.setName(sensor.getName());

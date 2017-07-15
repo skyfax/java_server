@@ -3,6 +3,7 @@ package iot.core.entities.sensorValue;
 import iot.core.entities.sensor.Sensor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -26,6 +27,8 @@ public class SensorValue implements Serializable {
 	private Sensor sensor;
 
 	private double value;
+
+	private Date readDate;
 
 	public SensorValue() {
 	}
@@ -54,4 +57,11 @@ public class SensorValue implements Serializable {
 		this.value = value;
 	}
 
+	public Date getReadDate() {
+		return readDate;
+	}
+
+	public void setReadDate(Date readDate) {
+		this.readDate = readDate;
+	}
 }

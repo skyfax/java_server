@@ -28,7 +28,7 @@ public class SensorController {
 	@RequestMapping(value = "/{sensorId}", method = RequestMethod.GET)
 	public JSONObject getSensor(@RequestParam long sensorId, HttpSession session) {
 		JSONObject object = new JSONObject();
-		SensorDTO sensor = sensorService.getSensorById(sensorId);
+		SensorDTO sensor = sensorService.getSensorById(sensorId,0);
 
 		object.put("sensor", sensor);
 
@@ -42,7 +42,7 @@ public class SensorController {
 
 		if(AuthUtils.isUserAuthenticated(session)){
 			sensor.setId(null);
-			Boolean result = sensorService.addSensor(sensor);
+			Boolean result = sensorService.addSensor(sensor,0);
 			obj.put("statusText", result?"success":"error");
 		}
 
@@ -54,7 +54,7 @@ public class SensorController {
 	public JSONObject removeSensor(@RequestParam long sensorId, HttpSession session) {
 		JSONObject obj = new JSONObject();
 		if(AuthUtils.isUserAuthenticated(session)){
-			Boolean result = sensorService.removeSensor(sensorId);
+			Boolean result = sensorService.removeSensor(sensorId,0);
 
 			obj.put("statusText", result);
 		}
@@ -69,7 +69,7 @@ public class SensorController {
 		Boolean result = false;
 
 		if(AuthUtils.isUserAuthenticated(session)){
-			 result = sensorService.editSensor(sensor);
+			 result = sensorService.editSensor(sensor,0);
 		}
 
 		return result;
@@ -86,12 +86,28 @@ public class SensorController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getSensorData", method = RequestMethod.POST)
-	public JSONObject addSensor(@RequestParam long sensorId, HttpSession session) {
+	public JSONObject getSensorData(@RequestParam long sensorId, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 		List<SensorValueDTO> sensorValues= sensorService.getSensorValues(sensorId);
 		jsonObject.put("values",sensorValues);
 
 		return jsonObject;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getCurrentData", method = RequestMethod.POST)
+	public JSONObject getCurrentData(@RequestParam long sensorId, HttpSession session) {
+		JSONObject jsonObject = new JSONObject();
+		List<SensorValueDTO> sensorValues= sensorService.getSensorValues(sensorId);
+		jsonObject.put("values",sensorValues);
+
+		return jsonObject;
+	}
+
+	private void toBeDeleted(){
+		sensorService.searchItems("dwad", new Long(2));
+		sensorService.getCurrentValueOfTheSensor(22,22);
+		sensorService.getDeviceSensors(22,22);
 	}
 
 }

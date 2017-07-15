@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-	@Autowired
-	UserService userService;
-
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> registerAccount(@RequestBody UserDTO sentUser) {
 
@@ -46,4 +43,25 @@ public class UserController {
 		}
 		return response;
 	}
+
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.DELETE)
+	public JSONObject deleteUser(@RequestParam long userId) {
+		JSONObject response = new JSONObject();
+
+		if (userService.removeUser(userId)) {
+			response.put("status", "ok");
+		} else {
+			response.put("status", "fail");
+		}
+		return response;
+	}
+
+	private final UserService userService;
+
+	@Autowired
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
+
 }

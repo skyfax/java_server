@@ -1,13 +1,10 @@
 package iot.core.entities.device;
 
-import java.io.Serializable;
-import java.util.List;
+import iot.core.entities.sensor.Sensor;
 
 import javax.persistence.*;
-
-import iot.core.entities.group.Group;
-import iot.core.entities.sensor.Sensor;
-import iot.core.entities.user.User;
+import java.io.Serializable;
+import java.util.List;
 
 
 /**

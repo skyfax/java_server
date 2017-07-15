@@ -1,41 +1,41 @@
 package iot.core.entities.group;
 
-import iot.core.entities.device.Device;
-import iot.core.entities.user.User;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
+
+/**
+ * The persistent class for the groups database table.
+ * 
+ */
 @Entity
 @Table(name="groups")
+@NamedQuery(name="Group.findAll", query="SELECT g FROM Group g")
 public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String name;
 
-	//bi-directional many-to-one association to Device
-	@ManyToOne
-	@JoinColumn(name="deviceId")
-	private Device device;
+	//bi-directional many-to-one association to GroupToDevice
+	@OneToMany(mappedBy="group")
+	private List<GroupToDevice> groupToDevices;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="userId")
-	private User user;
+	//bi-directional many-to-one association to GroupToUser
+	@OneToMany(mappedBy="group")
+	private List<GroupToUser> groupToUsers;
 
 	public Group() {
 	}
 
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -47,21 +47,48 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
-	public Device getDevice() {
-		return this.device;
+	public List<GroupToDevice> getGroupToDevices() {
+		return this.groupToDevices;
 	}
 
-	public void setDevice(Device device) {
-		this.device = device;
+	public void setGroupToDevices(List<GroupToDevice> groupToDevices) {
+		this.groupToDevices = groupToDevices;
 	}
 
-	public User getUser() {
-		return this.user;
+	public GroupToDevice addGroupToDevice(GroupToDevice groupToDevice) {
+		getGroupToDevices().add(groupToDevice);
+		groupToDevice.setGroup(this);
+
+		return groupToDevice;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public GroupToDevice removeGroupToDevice(GroupToDevice groupToDevice) {
+		getGroupToDevices().remove(groupToDevice);
+		groupToDevice.setGroup(null);
+
+		return groupToDevice;
+	}
+
+	public List<GroupToUser> getGroupToUsers() {
+		return this.groupToUsers;
+	}
+
+	public void setGroupToUsers(List<GroupToUser> groupToUsers) {
+		this.groupToUsers = groupToUsers;
+	}
+
+	public GroupToUser addGroupToUser(GroupToUser groupToUser) {
+		getGroupToUsers().add(groupToUser);
+		groupToUser.setGroup(this);
+
+		return groupToUser;
+	}
+
+	public GroupToUser removeGroupToUser(GroupToUser groupToUser) {
+		getGroupToUsers().remove(groupToUser);
+		groupToUser.setGroup(null);
+
+		return groupToUser;
 	}
 
 }
-

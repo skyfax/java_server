@@ -48,13 +48,10 @@ public class SensorRepositoryImpl implements SensorRepo {
 
 	@Override
 	public List<Sensor> getDeviceSensors(long deviceId) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Sensor> cq = cb.createQuery(Sensor.class);
-		Root<Sensor> sensor = cq.from(Sensor.class);
+		String sql = "SELECT s FROM Sensor s WHERE s.device.id = :deviceId";
 
-		cq.select(sensor);
-		cq.where(cb.equal(sensor.get("device.id"), deviceId));
-		Query query = em.createQuery(cq);
+		Query query = em.createQuery(sql);
+		query.setParameter("deviceId", deviceId);
 
 		@SuppressWarnings("unchecked")
 		List<Sensor> result = query.getResultList();

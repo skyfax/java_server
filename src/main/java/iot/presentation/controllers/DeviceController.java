@@ -15,15 +15,13 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/device")
-@SessionAttributes("user")
 public class DeviceController {
 
     @Autowired
     DeviceService deviceService;
 
     @RequestMapping(value = "/addDevice", method = RequestMethod.POST)
-    public @ResponseBody
-    JSONObject addDevice(@RequestBody DeviceDTO device, HttpSession session) {
+    public @ResponseBody JSONObject addDevice(@RequestBody DeviceDTO device, HttpSession session) {
         JSONObject obj = new JSONObject();
 
         if (AuthUtils.isUserAuthenticated(session)) {
@@ -57,7 +55,7 @@ public class DeviceController {
 
         if (AuthUtils.isUserAuthenticated(session)) {
             Long userId = AuthUtils.getUserId(session);
-            obj.put("statusText", deviceService.removeDevice(deviceId));
+            obj.put("statusText", deviceService.removeDevice(deviceId,userId));
         }
 
         return obj;
@@ -86,10 +84,25 @@ public class DeviceController {
         boolean response = false;
 
         if (AuthUtils.isUserAuthenticated(session)) {
-            response = deviceService.editDevice(device);
+            Long userId = AuthUtils.getUserId(session);
+            response = deviceService.editDevice(device,userId);
         }
 
         return response;
     }
+
+//    @RequestMapping(value = "/searchInfo", method = RequestMethod.GET)
+//    public @ResponseBody
+//    JSONObject editDevice(@RequestParam String text, HttpSession session) {
+//        JSONObject json = new JSONObject();
+//        Long userId = null;
+//        if (AuthUtils.isUserAuthenticated(session)) {
+//
+//        }
+//
+//        json = deviceService.searchItems(text, userId);
+//
+//        return json;
+//    }
 
 }

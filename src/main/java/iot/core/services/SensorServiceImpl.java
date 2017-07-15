@@ -1,7 +1,15 @@
 package iot.core.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import iot.common.SearchCriteria;
+import iot.common.SearchTextParser;
+import iot.core.entities.group.Group;
+import iot.core.repository.UserRepo;
+import iot.core.services.interfaces.GroupService;
+import iot.presentation.transport.GroupDTO;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,88 +29,131 @@ import iot.presentation.transport.SensorValueDTO;
 @Transactional
 public class SensorServiceImpl implements SensorService {
 
-	@Autowired
-	SensorRepo sensorRepo;
+    @Autowired
+    SensorRepo sensorRepo;
 
-	@Autowired
-	DeviceRepo deviceRepo;
+    @Autowired
+    DeviceRepo deviceRepo;
 
-	@Autowired
-	SensorValueRepo sensorValueRepo;
+    @Autowired
+    SensorValueRepo sensorValueRepo;
 
-	@Override
-	public boolean addSensor(SensorDTO sensor) {
+    @Autowired
+    GroupService groupService;
 
-		Sensor sen = sensor.toSensor();
-		Long deviceId = sensor.getDeviceId();
-		boolean result = false;
-		if (deviceId != null) {
-			Device device = deviceRepo.findDeviceById(deviceId);
+    @Override
+    public boolean addSensor(SensorDTO sensor, long requesterId) {
 
-			sen.setDevice(device);
-			result = sensorRepo.addSensor(sen);
-		}
+        Sensor sen = sensor.toSensor();
+        Long deviceId = sensor.getDeviceId();
+        boolean result = false;
+        if (deviceId != null) {
+            Device device = deviceRepo.findDeviceById(deviceId);
 
-		return result;
-	}
+            sen.setDevice(device);
+            result = sensorRepo.addSensor(sen);
+        }
 
-	@Override
-	public boolean removeSensor(long sensorId) {
-		boolean result = sensorRepo.removeSensor(sensorId);
+        return result;
+    }
 
-		return result;
-	}
+    @Override
+    public boolean removeSensor(long sensorId, long requesterId) {
+        boolean result = sensorRepo.removeSensor(sensorId);
 
-	@Override
-	public boolean editSensor(SensorDTO sensor) {
-		Sensor s = sensorRepo.getSensorById(sensor.getId());
+        return result;
+    }
 
-		s.setIsEventEnabled(sensor.isEventEnable());
-		s.setMaxVal(sensor.getMaxValue());
-		s.setMinVal(sensor.getMinValue());
-		s.setName(sensor.getName());
-		s.setSensorType(sensor.getSensorType().getValue());
+    @Override
+    public boolean editSensor(SensorDTO sensor, long requesterId) {
+        Sensor s = sensorRepo.getSensorById(sensor.getId());
 
-		boolean result = sensorRepo.editSensor(s);
+        s.setMaxVal(sensor.getMaxValue());
+        s.setMinVal(sensor.getMinValue());
+        s.setName(sensor.getName());
+        s.setSensorType(sensor.getSensorType().getValue());
 
-		return result;
-	}
+        boolean result = sensorRepo.editSensor(s);
 
-	@Override
-	public boolean addSensorValue(SensorValueDTO sVal) {
-		SensorValue sValToSave = new SensorValue();
-		Sensor sensor = sensorRepo.getSensorById(sVal.getSensorId());
-		boolean result = false;
+        return result;
+    }
 
-		if (sensor != null) {
-			sValToSave.setValue(sVal.getValue());
-			sValToSave.setSensor(sensor);
-			result = sensorValueRepo.addSensorValue(sValToSave);
-		}
+    @Override
+    public boolean addSensorValue(SensorValueDTO sVal) {
+        SensorValue sValToSave = new SensorValue();
+        Sensor sensor = sensorRepo.getSensorById(sVal.getSensorId());
+        boolean result = false;
 
-		return result;
-	}
+        if (sensor != null) {
+            sValToSave.setValue(sVal.getValue());
+            sValToSave.setSensor(sensor);
+            result = sensorValueRepo.addSensorValue(sValToSave);
+        }
 
-	@Override
-	public List<SensorDTO> getDeviceSensors(long deviceId) {
-		List<SensorDTO> sensors = SensorConverter.toSensorDTOList(sensorRepo.getDeviceSensors(deviceId));
+        return result;
+    }
 
-		return sensors;
-	}
+    @Override
+    public List<SensorDTO> getDeviceSensors(long deviceId, long requesterId) {
+        List<SensorDTO> sensors = SensorConverter.toSensorDTOList(sensorRepo.getDeviceSensors(deviceId));
 
-	@Override
-	public List<SensorValueDTO> getSensorValues(long sensorId) {
-		List<SensorValue> svals = sensorValueRepo.getSensorValues(sensorId);
-		List<SensorValueDTO> values = SensorConverter.toSensorValueDTOList(svals);
+        return sensors;
+    }
 
-		return values;
-	}
+    @Override
+    public List<SensorValueDTO> getSensorValues(long sensorId) {
+        List<SensorValue> svals = sensorValueRepo.getSensorValues(sensorId);
+        List<SensorValueDTO> values = SensorConverter.toSensorValueDTOList(svals);
 
-	@Override
-	public SensorDTO getSensorById(long sensorId) {
-		Sensor sensor = sensorRepo.getSensorById(sensorId);
-		
-		return SensorConverter.toSensorDTO(sensor);
-	}
+        return values;
+    }
+
+    @Override
+    public SensorDTO getSensorById(long sensorId, long requester) {
+        Sensor sensor = sensorRepo.getSensorById(sensorId);
+
+        return SensorConverter.toSensorDTO(sensor);
+    }
+
+    @Override
+    public SensorValueDTO getCurrentValueOfTheSensor(long sensorId, long requesterId) {
+        return null;
+    }
+
+    @Override
+    public JSONObject searchItems(String text, Long requesterId) {
+        JSONObject response = new JSONObject();
+        SearchCriteria searchCriteria = SearchTextParser.parseAndValidateSearchText(text);
+        boolean isLoggedIn = requesterId != null;
+        boolean hasGroupDevices = false;
+        List<SensorValue> sensorValues;
+
+        if (searchCriteria != null) {
+            if (isLoggedIn) {
+                isLoggedIn = true;
+                List<GroupDTO> groups = groupService.getGroupList(requesterId);
+                if (!groups.isEmpty()) {
+                    hasGroupDevices = true;
+                }
+            }
+
+            sensorValues = sensorValueRepo.getSensorValuesForSearch(searchCriteria, isLoggedIn, hasGroupDevices);
+            if(sensorValues!= null){
+                response =  SearchTextParser.convertSearchResults(sensorValues,searchCriteria);
+            }else {
+                putErrorOnResponse(response, "No valid data from devices could be found.", "2");
+            }
+        } else {
+            putErrorOnResponse(response, "Invalid search text.", "1");
+        }
+
+        return response;
+    }
+
+    private void putErrorOnResponse(JSONObject obj, String error, String errorCode) {
+        obj.put("error", error);
+        obj.put("errorCode", errorCode);
+    }
+
 
 }

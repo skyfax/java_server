@@ -100,7 +100,6 @@ public class SensorDTO {
     public Sensor toSensor() {
         Sensor sensor = new Sensor();
 
-        sensor.setIsEventEnabled(isEventEnable);
         sensor.setId(id);
         sensor.setMaxVal(maxValue);
         sensor.setMinVal(minValue);

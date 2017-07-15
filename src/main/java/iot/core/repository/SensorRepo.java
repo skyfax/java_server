@@ -6,14 +6,14 @@ import iot.core.entities.sensor.Sensor;
 
 public interface SensorRepo {
 	
-	public boolean addSensor(Sensor sensor);
+	 boolean addSensor(Sensor sensor);
 
-	public boolean removeSensor(long sensorId);
+	 boolean removeSensor(long sensorId);
 
-	public boolean editSensor(Sensor sensor);
+	 boolean editSensor(Sensor sensor);
 
-	public List<Sensor> getDeviceSensors(long deviceId);
+	 List<Sensor> getDeviceSensors(long deviceId);
 	
-	public Sensor getSensorById(long sensorId);
+	 Sensor getSensorById(long sensorId);
 
 }

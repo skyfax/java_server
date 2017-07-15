@@ -1,17 +1,26 @@
 package iot.core.services.interfaces;
 
+import iot.presentation.transport.NotificationDTO;
 import iot.presentation.transport.UserDTO;
+
+import javax.websocket.Session;
 
 public interface UserService {
 
-	public UserDTO addUser(UserDTO user);
+	 UserDTO addUser(UserDTO user);
 
-	public boolean removeUser(long userId);
+	 boolean removeUser(long userId);
 
-	public boolean editUser(UserDTO user);
+	 boolean editUser(UserDTO user);
 
-	public UserDTO authenticateUser(String username, String password);
+	 UserDTO authenticateUser(String username, String password);
 	
-	public UserDTO getUser(long userId);
+	 UserDTO getUser(long userId);
+
+	 void sendNotification(NotificationDTO notification);
+
+	 void subscribeForNotifications(Session session);
+
+	 void unsubscribeFromNotifications(Session session);
 
 }

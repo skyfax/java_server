@@ -7,10 +7,11 @@ function displayNavBar(page){
 		userId = sessionStorage.getItem("userId");
 
 	if( userId !== null){
-		activeTabsLeft = '<li ' + isPageActive(page,'devices') + '><a href="devices">Devices</a></li>';
+		activeTabsLeft = '<li ' + isPageActive(page,'devices') + '><a href="devices">Devices</a></li>' +
+                         '<li ' + isPageActive(page,'groups') + '><a href="groups">Groups</a></li>';
+
 		activeTabsRight = 	'<li ' + isPageActive(page,'account') + '><a href="account">Account</a></li>' +
               				'<li class="logOut"><a href="">Log Out</a></li>';
-		
 	}else {
 		activeTabsRight = 	'<li ' + isPageActive(page,'register') + '><a href="register">Register</a></li>' +
         					'<li ' + isPageActive(page,'signIn') + '><a href="login">Login</a></li>';

@@ -2,22 +2,27 @@ package iot.core.services.interfaces;
 
 import iot.presentation.transport.SensorDTO;
 import iot.presentation.transport.SensorValueDTO;
+import net.minidev.json.JSONObject;
 
 import java.util.List;
 
 public interface SensorService {
 
-	public boolean addSensor(SensorDTO sensor);
+	 boolean addSensor(SensorDTO sensor, long requesterId);
 
-	public boolean removeSensor(long sensorId);
+	 boolean removeSensor(long sensorId, long requesterId);
 
-	public boolean editSensor(SensorDTO sensor);
+	 boolean editSensor(SensorDTO sensor, long requesterId);
 
-	public boolean addSensorValue(SensorValueDTO sVal);
+	 boolean addSensorValue(SensorValueDTO sVal);
 
-	public List<SensorDTO> getDeviceSensors(long deviceId);
+	 List<SensorDTO> getDeviceSensors(long deviceId, long requesterId);
 	
-	public List<SensorValueDTO> getSensorValues(long sensorId);
+	 List<SensorValueDTO> getSensorValues(long sensorId);
 	
-	public SensorDTO getSensorById(long sensorId);
+	 SensorDTO getSensorById(long sensorId,long requester);
+
+	 SensorValueDTO getCurrentValueOfTheSensor(long sensorId, long requesterId);
+
+	JSONObject searchItems(String text, Long requesterId);
 }

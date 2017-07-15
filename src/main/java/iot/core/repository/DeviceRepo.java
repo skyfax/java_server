@@ -6,16 +6,18 @@ import iot.core.entities.device.Device;
 
 public interface DeviceRepo {
 	
-	public boolean addDevice(Device device);
+	 boolean addDevice(Device device);
 	
-	public boolean removeDevice(long deviceId);
+	 boolean removeDevice(long deviceId);
 	
-	public boolean editDevice(Device device);
+	 boolean editDevice(Device device);
 		
-	public List<Device> getUserDevices(long userId);
+	 List<Device> getUserDevices(long userId);
 	
-	public List<Device> getGroupDevices(long groupId);
+	 List<Device> getGroupDevices(long groupId);
 
-	public Device findDeviceById(long deviceId);
+	 Device findDeviceById(long deviceId);
+
+	Device authenticateDevice(String name, String serialNumber);
 
 }
